@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -63,11 +64,14 @@ public class RegisterActivity extends AppCompatActivity {
         }
         else
         {
+
             mAuth.createUserWithEmailAndPassword(user, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful())
                     {
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        updateUI(user);
                         Toast.makeText(RegisterActivity.this, "User registered successfully", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(RegisterActivity.this, MainActivity.class));
                         finish();
@@ -75,10 +79,23 @@ public class RegisterActivity extends AppCompatActivity {
                     else
                     {
                         Toast.makeText(RegisterActivity.this, "Registration Failed", Toast.LENGTH_SHORT).show();
+                        updateUI(null);
                     }
 
                 }
             });
+
         }
+    }
+    public void updateUI(FirebaseUser account){
+
+        if(account != null){
+            Toast.makeText(this,"You Registered In successfully",Toast.LENGTH_LONG).show();
+            startActivity(new Intent(this,LoginActivity.class));
+
+        }else {
+            Toast.makeText(this,"You Didnt signed in",Toast.LENGTH_LONG).show();
+        }
+
     }
 }

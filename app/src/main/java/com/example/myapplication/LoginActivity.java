@@ -13,6 +13,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private EditText email, password;
@@ -57,12 +59,30 @@ public class LoginActivity extends AppCompatActivity {
                 {
                     if(task.isSuccessful())
                     {
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        updateUI(user);
                         Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(LoginActivity.this , MainActivity.class));
                     }
                     else
                     {
-                        Toast.makeText(LoginActivity.this, "Login Failed"+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
+                        updateUI(null);
                     }
                 }
-            });        }    } }
+            });
+        }
+
+    }
+    public void updateUI(FirebaseUser account){
+
+        if(account != null){
+            Toast.makeText(this,"You Registered In successfully",Toast.LENGTH_LONG).show();
+            startActivity(new Intent(this,LoginActivity.class));
+
+        }else {
+            Toast.makeText(this,"You Didnt signed in",Toast.LENGTH_LONG).show();
+        }
+
+    }
+}
