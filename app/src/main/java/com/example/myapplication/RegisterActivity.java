@@ -23,7 +23,6 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText email, password;
     private Button btnRegister;
     private TextView textLogin;
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

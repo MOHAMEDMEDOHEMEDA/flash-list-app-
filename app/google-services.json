@@ -1,33 +1,34 @@
 {
   "project_info": {
-    "project_number": "931227069618",
-    "project_id": "mobileproject-254b0",
-    "storage_bucket": "mobileproject-254b0.appspot.com"
+    "project_number": "146526710499",
+    "firebase_url": "https://mobileproject-96c83-default-rtdb.firebaseio.com",
+    "project_id": "mobileproject-96c83",
+    "storage_bucket": "mobileproject-96c83.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:931227069618:android:d0fe0cdea6c08fb0e5edab",
+        "mobilesdk_app_id": "1:146526710499:android:2cb62d7a3bd77d8bd9f3d6",
         "android_client_info": {
           "package_name": "com.example.myapplication"
         }
       },
       "oauth_client": [
         {
-          "client_id": "931227069618-o3p6gn23mi33o33gd0cmr6ctmsh1gcsd.apps.googleusercontent.com",
+          "client_id": "146526710499-7r3e3b5gocm6nkjo5l6imesk2eu26tp4.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBqVv-v6DPlP1BDFY-JP3-i4iOf1E9vyG8"
+          "current_key": "AIzaSyBX4ATZU0_NlRNrDs5MHH549yQxFMRWSTg"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "931227069618-o3p6gn23mi33o33gd0cmr6ctmsh1gcsd.apps.googleusercontent.com",
+              "client_id": "146526710499-7r3e3b5gocm6nkjo5l6imesk2eu26tp4.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
