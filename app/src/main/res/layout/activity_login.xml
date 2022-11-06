@@ -36,7 +36,7 @@
         android:layout_margin="20dp"
         android:fontFamily="@font/aclonica"
         android:hint="email"
-        android:importantForAutofill="no"
+
         android:inputType="textEmailAddress"
         android:minHeight="48dp"
         android:textColor="#000000"
@@ -70,12 +70,14 @@
         android:layout_width="257dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/button"
+        android:background="@drawable/rectdesign"
         android:backgroundTint="@color/white"
         android:fontFamily="@font/aclonica"
+        android:minHeight="48dp"
         android:text="Login"
         android:textColor="#FFFFFF"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/text_register"

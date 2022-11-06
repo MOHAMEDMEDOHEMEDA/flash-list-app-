@@ -25,6 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnLogin;
     private TextView textRegister;
     private CheckBox showPass;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,9 +40,9 @@ public class LoginActivity extends AppCompatActivity {
         showPass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b){
+                if (b) {
                     password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                }else{
+                } else {
                     password.setTransformationMethod(PasswordTransformationMethod.getInstance());
                 }
             }
@@ -57,31 +58,29 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
-            }        });    }
+            }
+        });
+    }
 
-    private void login()
-    {
+    private void login() {
         String user = email.getText().toString().trim();
         String pass = password.getText().toString().trim();
-        if(user.isEmpty())
-        {            email.setError("Email can not be empty");        }
-        if(pass.isEmpty())
-        {            password.setError("Password can not be empty");        }
-        else
-        {
-            mAuth.signInWithEmailAndPassword(user,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        if (user.isEmpty()) {
+            email.setError("Email can not be empty");
+        }
+        if (pass.isEmpty()) {
+            password.setError("Password can not be empty");
+        } else {
+            mAuth.signInWithEmailAndPassword(user, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
-                public void onComplete(@NonNull Task<AuthResult> task)
-                {
-                    if(task.isSuccessful())
-                    {
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
                         FirebaseUser user = mAuth.getCurrentUser();
                         updateUI(user);
                         Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(LoginActivity.this , MainActivity.class));
-                    }
-                    else
-                    {
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        finish();
+                    } else {
                         Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
                         updateUI(null);
                     }
@@ -90,14 +89,12 @@ public class LoginActivity extends AppCompatActivity {
         }
 
     }
-    public void updateUI(FirebaseUser account){
-        if(account != null){
-            Toast.makeText(this,"You Registered In successfully",Toast.LENGTH_LONG).show();
-            startActivity(new Intent(this,LoginActivity.class));
 
-        }else {
+    public void updateUI(FirebaseUser account) {
+        if (account != null) {
+
+        } else {
 
         }
-
     }
 }
