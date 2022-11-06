@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
         email = findViewById(R.id.login_email);
         password = findViewById(R.id.login_password);
         btnLogin = findViewById(R.id.login);
-        showPass = findViewById(R.id.Check);
+        showPass = findViewById(R.id.CheckPassword);
         textRegister = findViewById(R.id.text_register);
         getSupportActionBar().hide();
         showPass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -61,6 +61,16 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+    @Override
+    protected void onStart(){
+        super.onStart();
+        FirebaseUser user = mAuth.getCurrentUser();
+        if(user!=null){
+            startActivity(new Intent(LoginActivity.this,MainActivity.class));
+        }else{
+
+        }
+    }
 
     private void login() {
         String user = email.getText().toString().trim();
@@ -77,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         FirebaseUser user = mAuth.getCurrentUser();
                         updateUI(user);
-                        Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Hello " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         finish();
                     } else {

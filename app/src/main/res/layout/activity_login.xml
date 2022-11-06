@@ -27,11 +27,12 @@
         android:layout_width="match_parent"
         android:layout_height="105dp"
         app:srcCompat="@drawable/logo"
-        android:contentDescription="TODO" />
+        android:contentDescription="LOGO" />
 
     <EditText
         android:id="@+id/login_email"
         android:layout_width="match_parent"
+        android:background="@drawable/boxdesign"
         android:layout_height="48dp"
         android:layout_margin="20dp"
         android:fontFamily="@font/aclonica"
@@ -46,6 +47,7 @@
         android:id="@+id/login_password"
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:background="@drawable/boxdesign"
         android:layout_margin="20dp"
         android:layout_marginBottom="20dp"
         android:fontFamily="@font/aclonica"
@@ -58,11 +60,13 @@
 
 
     <CheckBox
-        android:id="@+id/Check"
-        android:layout_width="166dp"
-        android:layout_height="60dp"
-        android:text="Show Password"
+        android:id="@+id/CheckPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_margin="20dp"
+        android:text="Show Password"
+        android:textColor="@color/black"
+        android:fontFamily="@font/aclonica"
         android:textStyle="bold" />
 
     <Button
