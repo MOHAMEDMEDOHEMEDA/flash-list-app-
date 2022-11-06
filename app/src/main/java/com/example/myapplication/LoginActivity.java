@@ -4,8 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +24,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText email, password;
     private Button btnLogin;
     private TextView textRegister;
+    private CheckBox showPass;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,9 +32,20 @@ public class LoginActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         email = findViewById(R.id.login_email);
         password = findViewById(R.id.login_password);
-        btnLogin  = findViewById(R.id.login);
+        btnLogin = findViewById(R.id.login);
+        showPass = findViewById(R.id.Check);
         textRegister = findViewById(R.id.text_register);
-
+        getSupportActionBar().hide();
+        showPass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b){
+                    password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                }else{
+                    password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
+            }
+        });
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,13 +91,12 @@ public class LoginActivity extends AppCompatActivity {
 
     }
     public void updateUI(FirebaseUser account){
-
         if(account != null){
             Toast.makeText(this,"You Registered In successfully",Toast.LENGTH_LONG).show();
             startActivity(new Intent(this,LoginActivity.class));
 
         }else {
-            Toast.makeText(this,"You Didnt signed in",Toast.LENGTH_LONG).show();
+
         }
 
     }
