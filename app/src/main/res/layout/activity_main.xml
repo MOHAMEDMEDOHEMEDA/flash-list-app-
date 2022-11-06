@@ -4,23 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:layout_margin="10dp">
+    tools:context=".MainActivity">
 
     <TextView
         android:id="@+id/text_welcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome to Home Page!"
         android:layout_centerInParent="true"
-        android:textSize="20dp"
         android:layout_marginBottom="20dp"
-        />
+        android:text="Welcome to Home Page!"
+        android:textSize="20dp" />
 
     <Button
         android:id="@+id/btnlogout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/white"
         android:layout_below="@+id/text_welcome"
         android:text="Log Out"/>
 
