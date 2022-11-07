@@ -30,7 +30,7 @@ import java.util.Map;
 public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseFirestore fAuth;
-    private EditText email, password,repassword;
+    private EditText email, password,repassword,PhoneNumber;
     private Button btnRegister;
     private String userID;
     private CheckBox showPass;
@@ -46,6 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
         lName = findViewById(R.id.lName);
         showPass = findViewById(R.id.CheckPass);
         email = findViewById(R.id.register_email);
+        PhoneNumber = findViewById(R.id.PhoneNumber);
         password = findViewById(R.id.register_password);
         repassword = findViewById(R.id.register_password2);
         btnRegister  = findViewById(R.id.sign_up);
@@ -84,7 +85,7 @@ public class RegisterActivity extends AppCompatActivity {
         String FirstName = fName.getText().toString().trim();
         String LastName = lName.getText().toString().trim();
         String Email = email.getText().toString().trim();
-        String phoneNumber = email.getText().toString().trim();
+        String phoneNumber = PhoneNumber.getText().toString().trim();
         String pass = password.getText().toString().trim();
         String user = email.getText().toString().trim();
 
@@ -142,7 +143,6 @@ public class RegisterActivity extends AppCompatActivity {
             startActivity(new Intent(this,LoginActivity.class));
 
         }else {
-            Toast.makeText(this,"You Didnt signed in",Toast.LENGTH_LONG).show();
         }
 
     }

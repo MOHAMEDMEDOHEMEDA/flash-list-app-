@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:background="@drawable/backlog"
+    android:gravity="center"
     android:orientation="vertical"
     tools:context=".LoginActivity">
 
     <TextView
         android:id="@+id/Welcome"
         android:layout_width="match_parent"
-        android:layout_height="111dp"
+        android:layout_height="142dp"
         android:layout_margin="50dp"
         android:fontFamily="@font/aclonica"
         android:gravity="center"
@@ -33,20 +33,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:autofillHints=""
             android:fontFamily="@font/aclonica"
-            android:minHeight="48dp"
             android:hint="First Name"
+            android:minHeight="48dp"
             android:textColor="#000000"
-            android:textColorHint="#000000"
-            android:autofillHints="" />
+            android:textColorHint="#000000" />
 
         <EditText
             android:id="@+id/lName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Last Name"
             android:layout_weight="1"
             android:fontFamily="@font/aclonica"
+            android:hint="Last Name"
             android:minHeight="48dp"
 
             android:textColor="#000000"
@@ -58,29 +58,29 @@
         android:layout_width="370dp"
         android:layout_height="48dp"
         android:layout_margin="20dp"
-        android:hint="Email"
+        android:background="@drawable/boxdesign"
         android:fontFamily="@font/aclonica"
+        android:hint="Email"
         android:importantForAutofill="no"
         android:includeFontPadding="false"
         android:inputType="textEmailAddress"
         android:minHeight="48dp"
-        android:background="@drawable/boxdesign"
         android:textColor="#000000"
         android:textColorHint="#000000"
         android:textSize="14sp" />
 
 
     <EditText
-        android:id="@+id/editTextPhone"
+        android:id="@+id/PhoneNumber"
         android:layout_width="370dp"
         android:layout_height="48dp"
+        android:background="@drawable/boxdesign"
         android:ems="10"
         android:fontFamily="@font/aclonica"
         android:hint="Phone number"
         android:inputType="phone"
         android:textColor="#000000"
         android:textColorHint="#000000"
-        android:background="@drawable/boxdesign"
         android:textSize="14sp" />
 
 
@@ -88,10 +88,10 @@
         android:id="@+id/register_password"
         android:layout_width="370dp"
         android:layout_height="48dp"
-        android:fontFamily="@font/aclonica"
         android:layout_margin="20dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/boxdesign"
+        android:fontFamily="@font/aclonica"
         android:hint="Password"
         android:importantForAutofill="no"
         android:inputType="textPassword"
@@ -104,23 +104,23 @@
         android:id="@+id/register_password2"
         android:layout_width="370dp"
         android:layout_height="48dp"
+        android:autofillHints=""
+        android:background="@drawable/boxdesign"
         android:ems="10"
+        android:fontFamily="@font/aclonica"
         android:hint="Re-Enter password"
         android:inputType="textPassword"
         android:textColor="#000000"
         android:textColorHint="#000000"
-        android:background="@drawable/boxdesign"
-        android:textSize="14sp"
-        android:fontFamily="@font/aclonica"
-        android:autofillHints="" />
+        android:textSize="14sp" />
 
     <CheckBox
         android:id="@+id/CheckPass"
-        android:fontFamily="@font/aclonica"
         android:layout_width="318dp"
         android:layout_height="48dp"
-        android:textColor="@color/black"
-        android:text="Show password" />
+        android:fontFamily="@font/aclonica"
+        android:text="Show password"
+        android:textColor="@color/black" />
 
     <Button
         android:id="@+id/sign_up"
