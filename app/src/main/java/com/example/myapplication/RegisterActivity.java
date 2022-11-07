@@ -3,11 +3,15 @@ package com.example.myapplication;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,21 +21,36 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
-    private EditText email, password;
+    private FirebaseFirestore fAuth;
+    private EditText email, password,repassword,PhoneNumber;
     private Button btnRegister;
-    private TextView textLogin;
+    private String userID;
+    private CheckBox showPass;
+    private TextView textLogin,fName,lName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_register);
         mAuth = FirebaseAuth.getInstance();
+        fAuth = FirebaseFirestore.getInstance();
+        fName = findViewById(R.id.fName);
+        lName = findViewById(R.id.lName);
+        showPass = findViewById(R.id.CheckPass);
         email = findViewById(R.id.register_email);
+        PhoneNumber = findViewById(R.id.PhoneNumber);
         password = findViewById(R.id.register_password);
-        btnRegister  = findViewById(R.id.register);
-        textLogin = findViewById(R.id.text_login);
+        repassword = findViewById(R.id.register_password2);
+        btnRegister  = findViewById(R.id.sign_up);
+        textLogin = findViewById(R.id.existing_account);
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,7 +58,19 @@ public class RegisterActivity extends AppCompatActivity {
                 Register();
             }
         });
+        showPass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    repassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                } else {
+                    password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    repassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
 
+                }
+            }
+        });
         textLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,8 +82,14 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void Register()
     {
-        String user = email.getText().toString().trim();
+        String FirstName = fName.getText().toString().trim();
+        String LastName = lName.getText().toString().trim();
+        String Email = email.getText().toString().trim();
+        String phoneNumber = PhoneNumber.getText().toString().trim();
         String pass = password.getText().toString().trim();
+        String repass = repassword.getText().toString().trim();
+        String user = email.getText().toString().trim();
+
         if(user.isEmpty())
         {
             email.setError("Email can not be empty");
@@ -61,6 +98,24 @@ public class RegisterActivity extends AppCompatActivity {
         {
             password.setError("Password can not be empty");
         }
+        if(FirstName.isEmpty())
+        {
+            fName.setError("First name can not be empty");
+        }
+        if(LastName.isEmpty())
+        {
+            lName.setError("Last Name can not be empty");
+        }
+        if(phoneNumber.isEmpty())
+        {
+            PhoneNumber.setError("Password can not be empty");
+        }
+        if(repass.isEmpty())
+        {
+            repassword.setError("Password can not be empty");
+        }
+
+
         else
         {
 
@@ -69,8 +124,22 @@ public class RegisterActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful())
                     {
-                        FirebaseUser user = mAuth.getCurrentUser();
-                        updateUI(user);
+                        userID = mAuth.getCurrentUser().getUid();
+                        DocumentReference documentReference = fAuth.collection("users").document(userID);
+                        Map<String,Object> user = new HashMap<>();
+                        user.put("FirstName",FirstName);
+                        user.put("LastName",LastName);
+                        user.put("Email",Email);
+                        user.put("Phone",phoneNumber);
+                        user.put("Password",pass);
+                        documentReference.set(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Log.d("App", "Profile Created" + userID);
+                            }
+                        });
+                        FirebaseUser User = mAuth.getCurrentUser();
+                        updateUI(User);
                         Toast.makeText(RegisterActivity.this, "User registered successfully", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(RegisterActivity.this, MainActivity.class));
                         finish();
@@ -93,7 +162,6 @@ public class RegisterActivity extends AppCompatActivity {
             startActivity(new Intent(this,LoginActivity.class));
 
         }else {
-            Toast.makeText(this,"You Didnt signed in",Toast.LENGTH_LONG).show();
         }
 
     }

@@ -1,53 +1,171 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegisterActivity"
-    android:layout_margin="10dp">
+    android:background="@drawable/backlog"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".LoginActivity">
 
     <TextView
-        android:id="@+id/text_register"
+        android:id="@+id/Welcome"
+        android:layout_width="match_parent"
+        android:layout_height="142dp"
+        android:layout_margin="50dp"
+        android:fontFamily="@font/aclonica"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:shadowColor="#FFFFFF"
+        android:text="@string/welcome_sir"
+        android:textColor="#FDFDFD"
+        android:textSize="30sp" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/fName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Register Here"
-        android:textSize="20dp"
-        android:layout_marginBottom="20dp"/>
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
+
+        android:background="@drawable/boxdesign"
+        android:fontFamily="@font/aclonica"
+        android:gravity="center"
+        android:hint="First Name"
+        android:importantForAutofill="no"
+        android:includeFontPadding="false"
+        android:inputType="text"
+        android:minHeight="48dp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#000000"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/lName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
+        android:background="@drawable/boxdesign"
+        android:fontFamily="@font/aclonica"
+        android:gravity="center"
+        android:hint="Last Name"
+        android:importantForAutofill="no"
+        android:includeFontPadding="false"
+        android:inputType="text"
+        android:minHeight="48dp"
+        android:shadowColor="#FFFFFF"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#000000"
+        android:textSize="14sp" />
+
 
     <EditText
         android:id="@+id/register_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/text_register"
-        android:layout_marginBottom="20dp"
-        android:hint="email"
-        android:minHeight="48dp" />
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
+        android:background="@drawable/boxdesign"
+        android:fontFamily="@font/aclonica"
+        android:gravity="center"
+        android:hint="Email"
+        android:importantForAutofill="no"
+        android:includeFontPadding="false"
+        android:inputType="textEmailAddress"
+        android:minHeight="48dp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#000000"
+        android:textSize="14sp" />
+
+
+    <EditText
+        android:id="@+id/PhoneNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
+        android:background="@drawable/boxdesign"
+        android:ems="10"
+        android:fontFamily="@font/aclonica"
+        android:gravity="center"
+        android:hint="Phone number"
+        android:inputType="phone"
+        android:minHeight="48dp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#000000"
+        android:textSize="14sp"
+        android:autofillHints="" />
+
 
     <EditText
         android:id="@+id/register_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/register_email"
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
         android:layout_marginBottom="20dp"
-        android:hint="password"
-        android:minHeight="48dp" />
+        android:background="@drawable/boxdesign"
+        android:fontFamily="@font/aclonica"
+        android:gravity="center"
+        android:hint="Password"
+        android:importantForAutofill="no"
+        android:inputType="textPassword"
+        android:minHeight="48dp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#000000"
+        android:textSize="14sp" />
 
-    <Button
-        android:id="@+id/register"
+    <EditText
+        android:id="@+id/register_password2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/register_password"
-        android:text="Register"
-        android:layout_marginBottom="20dp"/>
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
+        android:background="@drawable/boxdesign"
+        android:ems="10"
+        android:fontFamily="@font/aclonica"
+        android:gravity="center"
+        android:hint="Re-Enter password"
+        android:inputType="textPassword"
+        android:minHeight="48dp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#000000"
+        android:textSize="14sp"
+        android:autofillHints="" />
+
+    <CheckBox
+        android:id="@+id/CheckPass"
+        android:layout_width="318dp"
+        android:layout_height="48dp"
+        android:fontFamily="@font/aclonica"
+        android:text="Show password"
+        android:textColor="@color/black" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/sign_up"
+        android:layout_width="203dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/boxdesign"
+        android:fontFamily="@font/aclonica"
+        android:text="Sign up"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        app:iconTint="#101C5E"
+        app:rippleColor="#3F51B5" />
 
     <TextView
-        android:id="@+id/text_login"
+        android:id="@+id/existing_account"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/register"
-        android:text="Existing User Login"
+        android:layout_height="47dp"
         android:layout_marginBottom="20dp"
-        android:textAlignment="center"/>
+        android:fontFamily="@font/aclonica"
+        android:shadowColor="#000000"
+        android:text="Existing Account"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textStyle="bold" />
 
-</RelativeLayout>
+</LinearLayout>
