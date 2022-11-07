@@ -1,5 +1,4 @@
 package com.example.myapplication;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -26,7 +25,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
-
 public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseFirestore fAuth;
@@ -108,11 +106,11 @@ public class RegisterActivity extends AppCompatActivity {
         }
         if(phoneNumber.isEmpty())
         {
-            PhoneNumber.setError("Password can not be empty");
+            PhoneNumber.setError("Phone Number can not be empty");
         }
         if(repass.isEmpty())
         {
-            repassword.setError("Password can not be empty");
+            repassword.setError("Re password can not be empty");
         }
 
 
@@ -127,6 +125,7 @@ public class RegisterActivity extends AppCompatActivity {
                         userID = mAuth.getCurrentUser().getUid();
                         DocumentReference documentReference = fAuth.collection("users").document(userID);
                         Map<String,Object> user = new HashMap<>();
+                        User user1 = new User();
                         user.put("FirstName",FirstName);
                         user.put("LastName",LastName);
                         user.put("Email",Email);
