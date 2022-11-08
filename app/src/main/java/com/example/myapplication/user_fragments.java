@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,15 +22,16 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class user_fragments extends Fragment {
  private RecyclerView recyclerView;
  private UserAdapter userAdapter;
- private List<Users> mUser;
+ private List<User> mUser;
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.id.fragment_users,container, false);
+        @SuppressLint("ResourceType") View view = inflater.inflate(R.id.fragment_users,container, false);
         recyclerView =view.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -47,14 +49,19 @@ public class user_fragments extends Fragment {
                 mUser.clear();
                 for(DataSnapshot snapshot1 : snapshot.getChildren()){
                     User user = snapshot1.getValue(User.class);
+                    if (!user.getId().equals(firebaseUser.getUid())){
+                        mUser.add(user);
+                    }
 
                 }
+                userAdapter = new UserAdapter(getContext(),mUser);
+                recyclerView.setAdapter(userAdapter);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        }ValueEventListener);
+        });
     }
 }
