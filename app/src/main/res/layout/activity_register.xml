@@ -22,43 +22,49 @@
         android:textColor="#FDFDFD"
         android:textSize="30sp" />
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/fName"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="5dp"
+        android:layout_height="68dp"
+        android:orientation="horizontal">
 
-        android:background="@drawable/boxdesign"
-        android:fontFamily="@font/aclonica"
-        android:gravity="center"
-        android:hint="First Name"
-        android:importantForAutofill="no"
-        android:includeFontPadding="false"
-        android:inputType="text"
-        android:minHeight="48dp"
-        android:textColor="#FFFFFF"
-        android:textColorHint="#000000"
-        android:textSize="14sp" />
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/fName"
+            android:layout_width="191dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
 
-    <EditText
-        android:id="@+id/lName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="5dp"
-        android:background="@drawable/boxdesign"
-        android:fontFamily="@font/aclonica"
-        android:gravity="center"
-        android:hint="Last Name"
-        android:importantForAutofill="no"
-        android:includeFontPadding="false"
-        android:inputType="text"
-        android:minHeight="48dp"
-        android:shadowColor="#FFFFFF"
-        android:textColor="#FFFFFF"
-        android:textColorHint="#000000"
-        android:textSize="14sp" />
+            android:background="@drawable/boxdesign"
+            android:fontFamily="@font/aclonica"
+            android:gravity="center"
+            android:hint="First Name"
+            android:importantForAutofill="no"
+            android:includeFontPadding="false"
+            android:inputType="text"
+            android:minHeight="48dp"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#000000"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/lName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:background="@drawable/boxdesign"
+            android:fontFamily="@font/aclonica"
+            android:gravity="center"
+            android:hint="Last Name"
+            android:importantForAutofill="no"
+            android:includeFontPadding="false"
+            android:inputType="text"
+            android:minHeight="48dp"
+            android:shadowColor="#FFFFFF"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#000000"
+            android:textSize="14sp" />
+    </LinearLayout>
 
 
     <EditText
@@ -138,7 +144,7 @@
     <CheckBox
         android:id="@+id/CheckPass"
         android:layout_width="318dp"
-        android:layout_height="48dp"
+        android:layout_height="31dp"
         android:fontFamily="@font/aclonica"
         android:text="Show password"
         android:textColor="@color/black" />
@@ -159,7 +165,7 @@
     <TextView
         android:id="@+id/existing_account"
         android:layout_width="match_parent"
-        android:layout_height="47dp"
+        android:layout_height="61dp"
         android:layout_marginBottom="20dp"
         android:fontFamily="@font/aclonica"
         android:shadowColor="#000000"
