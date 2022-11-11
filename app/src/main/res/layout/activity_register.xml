@@ -23,11 +23,11 @@
         android:textSize="30sp" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="68dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <androidx.appcompat.widget.AppCompatEditText
+        <EditText
             android:id="@+id/fName"
             android:layout_width="191dp"
             android:layout_height="wrap_content"
@@ -43,12 +43,12 @@
             android:inputType="text"
             android:minHeight="48dp"
             android:textColor="#FFFFFF"
-            android:textColorHint="#000000"
+            android:textColorHint="#FFFFFF"
             android:textSize="14sp" />
 
         <EditText
             android:id="@+id/lName"
-            android:layout_width="match_parent"
+            android:layout_width="191dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="5dp"
@@ -60,9 +60,8 @@
             android:includeFontPadding="false"
             android:inputType="text"
             android:minHeight="48dp"
-            android:shadowColor="#FFFFFF"
             android:textColor="#FFFFFF"
-            android:textColorHint="#000000"
+            android:textColorHint="#FFFFFF"
             android:textSize="14sp" />
     </LinearLayout>
 
@@ -82,7 +81,7 @@
         android:inputType="textEmailAddress"
         android:minHeight="48dp"
         android:textColor="#FFFFFF"
-        android:textColorHint="#000000"
+        android:textColorHint="@color/white"
         android:textSize="14sp" />
 
 
@@ -92,6 +91,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="5dp"
+        android:autofillHints=""
         android:background="@drawable/boxdesign"
         android:ems="10"
         android:fontFamily="@font/aclonica"
@@ -100,9 +100,8 @@
         android:inputType="phone"
         android:minHeight="48dp"
         android:textColor="#FFFFFF"
-        android:textColorHint="#000000"
-        android:textSize="14sp"
-        android:autofillHints="" />
+        android:textColorHint="#FFFFFF"
+        android:textSize="14sp" />
 
 
     <EditText
@@ -120,7 +119,7 @@
         android:inputType="textPassword"
         android:minHeight="48dp"
         android:textColor="#FFFFFF"
-        android:textColorHint="#000000"
+        android:textColorHint="#FFFFFF"
         android:textSize="14sp" />
 
     <EditText
@@ -129,6 +128,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="5dp"
+        android:autofillHints=""
         android:background="@drawable/boxdesign"
         android:ems="10"
         android:fontFamily="@font/aclonica"
@@ -137,14 +137,13 @@
         android:inputType="textPassword"
         android:minHeight="48dp"
         android:textColor="#FFFFFF"
-        android:textColorHint="#000000"
-        android:textSize="14sp"
-        android:autofillHints="" />
+        android:textColorHint="#FFFFFF"
+        android:textSize="14sp" />
 
     <CheckBox
         android:id="@+id/CheckPass"
-        android:layout_width="318dp"
-        android:layout_height="31dp"
+        android:layout_width="179dp"
+        android:layout_height="48dp"
         android:fontFamily="@font/aclonica"
         android:text="Show password"
         android:textColor="@color/black" />
