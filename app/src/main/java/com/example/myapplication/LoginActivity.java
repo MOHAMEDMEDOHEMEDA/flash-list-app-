@@ -66,12 +66,10 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseUser user = mAuth.getCurrentUser();
         if(user!=null){
             startActivity(new Intent(LoginActivity.this,MainActivity.class));
+            finishAffinity();
         }else{
         }
     }
-
-
-
     private void login() {
         String user = email.getText().toString().trim();
         String pass = password.getText().toString().trim();
@@ -89,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
                         updateUI(user);
                         Toast.makeText(LoginActivity.this, "Hello Sir !", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                        finish();
+                        finishAffinity();
                     } else {
                         Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
                         updateUI(null);
@@ -99,7 +97,6 @@ public class LoginActivity extends AppCompatActivity {
         }
 
     }
-
     public void updateUI(FirebaseUser account) {
         if (account != null) {
 

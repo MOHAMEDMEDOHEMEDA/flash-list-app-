@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Acount">
+    <item android:title="Account">
 
         <menu>
             <group android:checkableBehavior="single">
@@ -9,7 +9,6 @@
                     android:id="@+id/DeveloperId"
                     android:title="Developers"
                     android:icon="@drawable/people_icon"/>
-
                 <item
                     android:id="@+id/LogoutId"
                     android:title="Logout"
