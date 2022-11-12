@@ -13,14 +13,11 @@ import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
 public class SlideAdapter extends PagerAdapter {
-
     Context context;
     LayoutInflater layoutInflater ;
-
     public SlideAdapter(Context context){
         this.context= context;
     };
-
     //Arrays
     public int[] slide_image = {
             R.drawable.mahmoud,
@@ -32,7 +29,6 @@ public class SlideAdapter extends PagerAdapter {
             R.drawable.mohammed,
             R.drawable.ic_launcher_background,
     };
-
     //Arrays
     public String[] slide_headings= {
             "Mahmoud Essam Fathy \n",
@@ -43,9 +39,7 @@ public class SlideAdapter extends PagerAdapter {
             "Shahd Ahmed Saad\n",
             "Mohammed Magdy Hameda\n",
             "Yara Hatem Ibrahim\n"
-
     };
-
     public String[] slide_descs= {
             "faculty of computers and data science\n senior 2025\n ID:20221460231",
             "faculty of computers and data science\n senior 2025\n ID:20221452411",
@@ -55,8 +49,6 @@ public class SlideAdapter extends PagerAdapter {
             "faculty of computers and data science\n senior 2025\n ID:20221452998",
             "faculty of computers and data science\n senior 2025\n ID:20221460218",
             "faculty of computers and data science\n senior 2025\n ID:20221464983"
-
-
     };
     @Override
     public int getCount() {

@@ -1,7 +1,10 @@
 package com.example.myapplication;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
@@ -48,7 +51,6 @@ public class RegisterActivity extends AppCompatActivity {
         repassword = findViewById(R.id.register_password2);
         btnRegister  = findViewById(R.id.sign_up);
         textLogin = findViewById(R.id.existing_account);
-
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,7 +79,29 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
     }
-
+    @Override
+    public void onBackPressed() {
+            super.onBackPressed();
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(RegisterActivity.this);
+            alertDialog.setTitle("Close App");
+            alertDialog.setMessage("Do you want to exit?");
+            alertDialog.setCancelable(true);
+            alertDialog.setPositiveButton("Yes",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            // Home.this.finish();
+                            finishAffinity();
+                        }
+                    });
+            alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.cancel();
+                }
+            });
+            alertDialog.show();
+        }
     private void Register()
     {
         String FirstName = fName.getText().toString().trim();

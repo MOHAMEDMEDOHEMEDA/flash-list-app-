@@ -47,8 +47,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
+        }else{
             super.onBackPressed();
+
         }
     }
     @Override
@@ -65,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.DeveloperId:
                 Intent intent = new Intent(MainActivity.this, MainActivityDevelopers.class);
                 startActivity(intent);
-                finish();
+                break;
             case R.id.LogoutId:
                 FirebaseAuth.getInstance().signOut();
                 Intent intent2 = new Intent(MainActivity.this, LoginActivity.class);
