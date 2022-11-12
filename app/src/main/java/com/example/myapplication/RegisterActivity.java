@@ -36,7 +36,6 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();
         setContentView(R.layout.activity_register);
         mAuth = FirebaseAuth.getInstance();
         fAuth = FirebaseFirestore.getInstance();
@@ -160,7 +159,6 @@ public class RegisterActivity extends AppCompatActivity {
         if(account != null){
             Toast.makeText(this,"You Registered In successfully",Toast.LENGTH_LONG).show();
             startActivity(new Intent(this,LoginActivity.class));
-
         }else {
         }
 

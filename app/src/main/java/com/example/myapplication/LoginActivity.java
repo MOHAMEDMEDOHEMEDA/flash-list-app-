@@ -25,7 +25,6 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnLogin;
     private TextView textRegister;
     private CheckBox showPass;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +35,6 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.login);
         showPass = findViewById(R.id.CheckPassword);
         textRegister = findViewById(R.id.text_register);
-        getSupportActionBar().hide();
         showPass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -69,9 +67,10 @@ public class LoginActivity extends AppCompatActivity {
         if(user!=null){
             startActivity(new Intent(LoginActivity.this,MainActivity.class));
         }else{
-
         }
     }
+
+
 
     private void login() {
         String user = email.getText().toString().trim();
@@ -89,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
                         FirebaseUser user = mAuth.getCurrentUser();
                         updateUI(user);
                         Toast.makeText(LoginActivity.this, "Hello Sir !", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(LoginActivity.this, user_fragments.class));
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         finish();
                     } else {
                         Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();

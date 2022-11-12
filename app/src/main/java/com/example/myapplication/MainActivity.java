@@ -25,37 +25,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
-    Menu menu;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
          //---------------------Hooks------------------------/
-                drawerLayout= findViewById(R.id.drawer_layout);
+        drawerLayout= findViewById(R.id.drawer_layout);
         navigationView= findViewById(R.id.ViewId);
         toolbar = findViewById(R.id.toolbar);
-
         //---------------------toolbar------------------------/
-                setSupportActionBar(toolbar);
-
+        setSupportActionBar(toolbar);
         //---------------------navigation drawer menu------------------------/
-
-                navigationView.bringToFront();
+        navigationView.bringToFront();
         ActionBarDrawerToggle toggle =  new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
-        // فهمت فهمت ، وريني السطر ده
-
     }
     @Override
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            ;
             drawerLayout.closeDrawer(GravityCompat.START);
-
         } else {
             super.onBackPressed();
         }
@@ -75,12 +66,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Intent intent = new Intent(MainActivity.this, MainActivityDevelopers.class);
                 startActivity(intent);
                 finish();
-
             case R.id.LogoutId:
                 FirebaseAuth.getInstance().signOut();
                 Intent intent2 = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent2);
-                finish();
         }
         return true;
     }

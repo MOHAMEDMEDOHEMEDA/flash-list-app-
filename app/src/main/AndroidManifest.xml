@@ -22,12 +22,6 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".user_fragments"
-            android:exported="false"
-            android:launchMode="singleTop"
-            android:theme="@style/Theme.AppCompat" >
-        </activity>
-        <activity
             android:name=".RegisterActivity"
             android:exported="true" >
             <meta-data
