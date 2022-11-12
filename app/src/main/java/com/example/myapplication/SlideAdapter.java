@@ -27,7 +27,7 @@ public class SlideAdapter extends PagerAdapter {
             R.drawable.wesam,
             R.drawable.shahd1,
             R.drawable.mohammed,
-            R.drawable.ic_launcher_background,
+            R.drawable.yara1,
     };
     //Arrays
     public String[] slide_headings= {
