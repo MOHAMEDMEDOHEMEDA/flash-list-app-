@@ -23,11 +23,10 @@ public class SlideAdapter extends PagerAdapter {
 
     //Arrays
     public int[] slide_image = {
-
             R.drawable.mahmoud,
             R.drawable.nourhan,
             R.drawable.merna,
-            R.drawable.ic_launcher_background,
+            R.drawable.ziad,
             R.drawable.wesam,
             R.drawable.shahd1,
             R.drawable.mohammed,
