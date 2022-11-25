@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -21,6 +22,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -112,7 +116,7 @@ public class LoginActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         FirebaseUser user = mAuth.getCurrentUser();
                         updateUI(user);
-                        Toast.makeText(LoginActivity.this, "Hello Sir !", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Welcome sir! ", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         finishAffinity();
                     } else {
@@ -126,8 +130,9 @@ public class LoginActivity extends AppCompatActivity {
     }
     public void updateUI(FirebaseUser account) {
         if (account != null) {
-
+            Log.d("Android", "Account is done = [" + account + "]");
         } else {
+            Log.d("Android", "Account failed = [" + null + "]");
 
         }
     }
