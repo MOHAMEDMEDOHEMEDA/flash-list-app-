@@ -42,7 +42,7 @@ public class WelcomePage extends AppCompatActivity {
     protected void onStart(){
         super.onStart();
         FirebaseUser user = mAuth.getCurrentUser();
-        if(user!=null){
+        if(user!=null && user.isEmailVerified()){
             startActivity(new Intent(getApplicationContext(),MainActivity.class));
             finishAffinity();
         }else{

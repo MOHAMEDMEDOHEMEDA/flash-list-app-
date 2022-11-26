@@ -108,9 +108,7 @@ public class RegisterActivity extends AppCompatActivity {
         String phoneNumber = PhoneNumber.getText().toString().trim();
         String pass = password.getText().toString().trim();
         String repass = repassword.getText().toString().trim();
-        String user = email.getText().toString().trim();
-
-        if(user.isEmpty())
+        if(Email.isEmpty())
         {
             email.setError("Email can not be empty");
         }
@@ -134,36 +132,45 @@ public class RegisterActivity extends AppCompatActivity {
         {
             repassword.setError("Re password can not be empty");
         }
-
-
+        if(!repass.equals(pass)){
+            repassword.setError("Password not matched");
+            password.setError("Password not matched");
+        }
         else
         {
-
-            mAuth.createUserWithEmailAndPassword(user, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            mAuth.createUserWithEmailAndPassword(Email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful())
                     {
-                        userID = mAuth.getCurrentUser().getUid();
-                        DocumentReference documentReference = fAuth.collection("users").document(userID);
-                        Map<String,Object> user = new HashMap<>();
-                        User user1 = new User();
-                        user.put("FirstName",FirstName);
-                        user.put("LastName",LastName);
-                        user.put("Email",Email);
-                        user.put("Phone",phoneNumber);
-                        user.put("Password",pass);
-                        documentReference.set(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        mAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                Log.d("App", "Profile Created" + userID);
+                                userID = mAuth.getCurrentUser().getUid();
+                                DocumentReference documentReference = fAuth.collection("users").document(userID);
+                                Map<String,Object> user = new HashMap<>();
+                                user.put("FirstName",FirstName);
+                                user.put("LastName",LastName);
+                                user.put("Email",Email);
+                                user.put("Phone",phoneNumber);
+                                user.put("Password",pass);
+                                documentReference.set(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        Log.d("App", "Profile Created" + userID);
+                                    }
+                                });
+                                FirebaseUser User = mAuth.getCurrentUser();
+                                updateUI(User);
+                                Toast.makeText(RegisterActivity.this, "Please open your email and verify it", Toast.LENGTH_SHORT).show();
+                                fName.setText("");
+                                lName.setText("");
+                                email.setText("");
+                                PhoneNumber.setText("");
+                                password.setText("");
+                                repassword.setText("");
                             }
                         });
-                        FirebaseUser User = mAuth.getCurrentUser();
-                        updateUI(User);
-                        Toast.makeText(RegisterActivity.this, "User registered successfully", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(RegisterActivity.this, MainActivity.class));
-                        finish();
                     }
                     else
                     {
@@ -176,13 +183,12 @@ public class RegisterActivity extends AppCompatActivity {
 
         }
     }
-    public void updateUI(FirebaseUser account){
+    public void updateUI(FirebaseUser account) {
+        if (account != null) {
+            Log.d("Android", "Register is done = [" + account + "]");
+        } else {
+            Log.d("Android", "Register failed = [" + null + "]");
 
-        if(account != null){
-            Toast.makeText(this,"You Registered In successfully",Toast.LENGTH_LONG).show();
-            startActivity(new Intent(this,LoginActivity.class));
-        }else {
         }
-
     }
 }
