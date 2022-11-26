@@ -132,6 +132,10 @@ public class RegisterActivity extends AppCompatActivity {
         {
             repassword.setError("Re password can not be empty");
         }
+        if(!repass.equals(pass)){
+            repassword.setError("Password not matched");
+            password.setError("Password not matched");
+        }
         else
         {
             mAuth.createUserWithEmailAndPassword(Email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -159,8 +163,12 @@ public class RegisterActivity extends AppCompatActivity {
                                 FirebaseUser User = mAuth.getCurrentUser();
                                 updateUI(User);
                                 Toast.makeText(RegisterActivity.this, "Please open your email and verify it", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
-                                finish();
+                                fName.setText("");
+                                lName.setText("");
+                                email.setText("");
+                                PhoneNumber.setText("");
+                                password.setText("");
+                                repassword.setText("");
                             }
                         });
                     }
