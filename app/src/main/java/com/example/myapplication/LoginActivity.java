@@ -93,15 +93,15 @@ public class LoginActivity extends AppCompatActivity {
         });
         alertDialog.show();
     }
-
     @Override
     protected void onStart(){
         super.onStart();
         FirebaseUser user = mAuth.getCurrentUser();
-        if(user!=null){
+        if(user!=null && user.isEmailVerified()){
             startActivity(new Intent(LoginActivity.this,MainActivity.class));
             finishAffinity();
         }else{
+
         }
     }
     private void login() {
