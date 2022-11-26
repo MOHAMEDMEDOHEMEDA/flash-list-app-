@@ -65,9 +65,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
+        android:fontFamily="@font/aclonica"
+        android:minHeight="48dp"
         android:text="Show Password"
         android:textColor="@color/black"
-        android:fontFamily="@font/aclonica"
         android:textStyle="bold" />
 
     <androidx.appcompat.widget.AppCompatButton
