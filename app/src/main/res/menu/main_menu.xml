@@ -6,6 +6,10 @@
         <menu>
             <group android:checkableBehavior="single">
                 <item
+                    android:id="@+id/UserInfo"
+                    android:title="User Information"
+                    android:icon="@drawable/info_icon"/>
+                <item
                     android:id="@+id/DeveloperId"
                     android:title="Developers"
                     android:icon="@drawable/people_icon"/>
