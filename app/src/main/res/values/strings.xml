@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Flash Chat</string>
+    <string name="app_name">Flash List</string>
     <string name="register">Register</string>
     <string name="name">Name</string>
     <string name="email">Email</string>
@@ -7,11 +7,10 @@
     <string name="back_to_login">Back to login</string>
     <string name="logout">LogOut</string>
     <string name="user_email">User Email :</string>
-    <string name="name_of_user">Name OF user :</string>
+    <string name="name_of_user">Name of user :</string>
     <string name="main_activity_welcome">Main Activity Welcome !</string>
     <string name="welcome_sir">Welcome To To-Do list !</string>
     <string name="username">username</string>
-
     <string name="navigation_drawer_open"> Open navigation drawer </string>
     <string name="navigation_drawer_close"> Close navigation drawer </string>
     <string name="todo">TODO</string>

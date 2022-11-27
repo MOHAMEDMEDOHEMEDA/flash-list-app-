@@ -25,14 +25,14 @@
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="match_parent"
-        android:layout_height="105dp"
-        app:srcCompat="@drawable/logo"
-        android:contentDescription="LOGO" />
+        android:layout_height="wrap_content"
+        android:contentDescription="LOGO"
+        app:srcCompat="@drawable/logoo" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/login_email"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:background="@drawable/boxdesign"
         android:fontFamily="@font/aclonica"
@@ -46,7 +46,7 @@
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/login_password"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/boxdesign"
@@ -64,31 +64,28 @@
         android:id="@+id/CheckPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
         android:fontFamily="@font/aclonica"
-        android:minHeight="48dp"
         android:text="Show Password"
         android:textColor="@color/black"
         android:textStyle="bold" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/login"
-        android:layout_width="257dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_margin="20dp"
         android:background="@drawable/boxdesign"
         android:fontFamily="@font/aclonica"
         android:minHeight="48dp"
         android:text="Login"
         android:textColor="#FDFDFD"
         android:textStyle="bold"
-        tools:ignore="TouchTargetSizeCheck" />
+        tools:ignore="TouchTargetSizeCheck,DuplicateSpeakableTextCheck" />
 
     <TextView
         android:id="@+id/text_register"
         android:layout_width="match_parent"
         android:layout_height="47dp"
-        android:layout_marginBottom="20dp"
         android:fontFamily="@font/aclonica"
         android:shadowColor="#000000"
         android:text="New User Register"
