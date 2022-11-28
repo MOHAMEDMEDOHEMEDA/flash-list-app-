@@ -36,7 +36,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.MenuItem;
+import androidx.appcompat.widget.Toolbar;
+import com.google.android.material.navigation.NavigationView;
+import android.view.Menu;
+import android.view.View;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -200,11 +207,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
                 });
 
-                //--------------=====---/3
 
             }
 
-            //--------------=====---/4
+
 
             @NonNull
             @Override
@@ -216,6 +222,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         recyclerView.setAdapter(adapter);
         adapter.startListening();
     }
+    //--------------=====---/3
+
+    //--------------=====---/4
     //--------------=====---/4
     //--------------=====---/5
     public static class MyViewHolder extends RecyclerView.ViewHolder {
