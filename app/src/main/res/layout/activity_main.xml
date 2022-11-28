@@ -15,7 +15,9 @@
         android:id="@+id/ViewId"
         app:headerLayout="@layout/header"
         app:menu="@menu/main_menu"
-        android:layout_gravity="start"/>
+        android:layout_gravity="start">
+
+    </com.google.android.material.navigation.NavigationView>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -23,7 +25,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <androidx.appcompat.widget.Toolbar
@@ -41,7 +43,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="582dp">
+                android:layout_height="678dp">
 
             </androidx.recyclerview.widget.RecyclerView>
 
@@ -54,7 +56,6 @@
                 android:contentDescription="@string/todo"
                 android:src="@drawable/ic_add_black_24dp"
                 app:backgroundTint="#FFF" />
-
         </LinearLayout>
     </ScrollView>
 
