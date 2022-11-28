@@ -149,6 +149,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         final EditText description = myView.findViewById(R.id.description);
         Button save = myView.findViewById(R.id.saveBtn);
         Button cancel = myView.findViewById(R.id.CancelBtn);
+        // cancel method/
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,6 +157,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 dialog.dismiss();
             }
         });
+        // save method/
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -259,6 +261,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //need to merg with add task   1 /
+
                 task = mTask.getText().toString().trim();
                 description = mDescription.getText().toString().trim();
 
@@ -268,6 +272,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
 
                 Model model = new Model(task, description, key, date);
+                //need to merg with add task   1 /
 
                 reference.child(key).setValue(model).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -309,6 +314,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         dialog.show();
     }
     //--------------=====---/5
+    //--------------=====m4 fahmha---1/
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()){
@@ -327,5 +334,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         }
         return true;
+        //--------------=====m4 fahmha---1/
+
     }
 }
