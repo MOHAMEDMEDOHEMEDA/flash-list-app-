@@ -211,47 +211,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
 
         }
-
-        //--------------=====---/3
-
-        FirebaseRecyclerOptions<Model> options = new FirebaseRecyclerOptions.Builder<Model>()
-                .setQuery(reference, Model.class)
-                .build();
-
-        FirebaseRecyclerAdapter<Model, MyViewHolder> adapter;
-        adapter = new FirebaseRecyclerAdapter<Model, MyViewHolder>(options) {
-            @Override
-            protected void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") final int position, @NonNull final Model model) {
-                holder.setDate(model.getDate());
-                holder.setTask(model.getTask());
-                holder.setDesc(model.getDescription());
-
-                holder.mView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        key = getRef(position).getKey();
-                        task = model.getTask();
-                        description = model.getDescription();
-
-                        updateTask();
-                    }
-                });
-
-                //--------------=====---/3
-
-            }
-
-            //--------------=====---/4
-
-            @NonNull
-            @Override
-            public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.retrieved_layout, parent, false);
-                return new MyViewHolder(view);
-            }
-        };
-        recyclerView.setAdapter(adapter);
-        adapter.startListening();
     }
     //--------------=====---/4
     //--------------=====---/5
