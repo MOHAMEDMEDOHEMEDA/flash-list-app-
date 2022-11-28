@@ -1,4 +1,5 @@
 package com.example.myapplication;
+
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -37,6 +38,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Date;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private RecyclerView recyclerView;
     private FloatingActionButton floatingActionButton;
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private String key = "";
     private String task;
     private String description;
+    //--------------=====---/
     private FirebaseAuth mAuth;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
@@ -116,7 +119,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         updateTask();
                     }
                 });
+
+
             }
+
+
             @NonNull
             @Override
             public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -127,6 +134,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         recyclerView.setAdapter(adapter);
         adapter.startListening();
     }
+    //--------------=====---/2
     private void addTask() {
         AlertDialog.Builder myDialog = new AlertDialog.Builder(this);
         LayoutInflater inflater = LayoutInflater.from(this);
@@ -158,7 +166,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 String date = null;
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
                     date = DateFormat.getDateInstance().format(new Date());
-
                 }
 
 
@@ -194,6 +201,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
         dialog.show();
     }
+    //--------------=====---/2
+
     @Override
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -202,8 +211,50 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
 
         }
-    }
 
+        //--------------=====---/3
+
+        FirebaseRecyclerOptions<Model> options = new FirebaseRecyclerOptions.Builder<Model>()
+                .setQuery(reference, Model.class)
+                .build();
+
+        FirebaseRecyclerAdapter<Model, MyViewHolder> adapter;
+        adapter = new FirebaseRecyclerAdapter<Model, MyViewHolder>(options) {
+            @Override
+            protected void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") final int position, @NonNull final Model model) {
+                holder.setDate(model.getDate());
+                holder.setTask(model.getTask());
+                holder.setDesc(model.getDescription());
+
+                holder.mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        key = getRef(position).getKey();
+                        task = model.getTask();
+                        description = model.getDescription();
+
+                        updateTask();
+                    }
+                });
+
+                //--------------=====---/3
+
+            }
+
+            //--------------=====---/4
+
+            @NonNull
+            @Override
+            public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.retrieved_layout, parent, false);
+                return new MyViewHolder(view);
+            }
+        };
+        recyclerView.setAdapter(adapter);
+        adapter.startListening();
+    }
+    //--------------=====---/4
+    //--------------=====---/5
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         View mView;
 
@@ -216,10 +267,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             TextView taskTectView = mView.findViewById(R.id.taskTv);
             taskTectView.setText(task);
         }
+
         public void setDesc(String desc) {
             TextView descTectView = mView.findViewById(R.id.descriptionTv);
             descTectView.setText(desc);
         }
+
         public void setDate(String date) {
             TextView dateTextView = mView.findViewById(R.id.dateTv);
         }
@@ -229,39 +282,53 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.update_data, null);
         myDialog.setView(view);
+
         final AlertDialog dialog = myDialog.create();
+
         final EditText mTask = view.findViewById(R.id.mEditTextTask);
         final EditText mDescription = view.findViewById(R.id.mEditTextDescription);
+
         mTask.setText(task);
         mTask.setSelection(task.length());
+
         mDescription.setText(description);
         mDescription.setSelection(description.length());
+
         Button delButton = view.findViewById(R.id.btnDelete);
         Button updateButton = view.findViewById(R.id.btnUpdate);
+
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 task = mTask.getText().toString().trim();
                 description = mDescription.getText().toString().trim();
+
                 String date = null;
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
                     date = DateFormat.getDateInstance().format(new Date());
                 }
+
                 Model model = new Model(task, description, key, date);
+
                 reference.child(key).setValue(model).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
+
                         if (task.isSuccessful()){
                             Toast.makeText(MainActivity.this, "Data has been updated successfully", Toast.LENGTH_SHORT).show();
                         }else {
                             String err = task.getException().toString();
                             Toast.makeText(MainActivity.this, "update failed "+err, Toast.LENGTH_SHORT).show();
                         }
+
                     }
                 });
+
                 dialog.dismiss();
+
             }
         });
+
         delButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -282,6 +349,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         dialog.show();
     }
+    //--------------=====---/5
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()){
