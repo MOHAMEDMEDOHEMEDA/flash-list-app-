@@ -11,7 +11,7 @@
         android:id="@+id/welcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="56dp"
         android:fontFamily="@font/aclonica"
         android:text="@string/welcome_sir"
         android:textColor="#8C9EFF"
@@ -23,19 +23,22 @@
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="354dp"
+        android:layout_width="wrap_content"
         android:layout_height="202dp"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="32dp"
         android:contentDescription="TODO"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/welcome"
         app:srcCompat="@drawable/logo" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/ReigsterPage"
-        android:layout_width="248dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
         android:background="@drawable/boxdesign"
         android:shadowColor="#000000"
         android:shadowRadius="50"
@@ -51,9 +54,11 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/LoginPage"
-        android:layout_width="248dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="84dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
         android:background="@drawable/boxdesign"
         android:shadowColor="#000000"
         android:text="Login"
@@ -61,10 +66,18 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.484"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView3"
-        app:layout_constraintVertical_bias="0.111" />
+        app:layout_constraintVertical_bias="0.0" />
 
+    <pl.droidsonroids.gif.GifImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/welcomegif"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ReigsterPage" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

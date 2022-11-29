@@ -40,15 +40,20 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="4">
+
             <EditText
                 android:id="@+id/mEditTextTask"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
                 android:hint="Task"
-                android:textStyle="bold"
+                android:minHeight="48dp"
                 android:textColor="#000"
                 android:textColorHint="#000"
-                android:layout_margin="10dp"/>
+                android:textStyle="bold" />
         </RelativeLayout>
     </LinearLayout>
 
@@ -75,15 +80,20 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="4">
+
             <EditText
                 android:id="@+id/mEditTextDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
                 android:hint="Description"
-                android:textStyle="bold"
+                android:minHeight="48dp"
                 android:textColor="#000"
                 android:textColorHint="#000"
-                android:layout_margin="10dp"/>
+                android:textStyle="bold" />
         </RelativeLayout>
     </LinearLayout>
 
