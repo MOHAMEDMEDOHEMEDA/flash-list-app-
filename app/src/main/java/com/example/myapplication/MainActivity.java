@@ -136,6 +136,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
     //--------------=====---/2
     private void addTask() {
+        // show alert dialog
         AlertDialog.Builder myDialog = new AlertDialog.Builder(this);
         LayoutInflater inflater = LayoutInflater.from(this);
 
