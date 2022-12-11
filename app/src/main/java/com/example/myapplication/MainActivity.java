@@ -78,9 +78,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(linearLayoutManager);
-
         loader = new ProgressDialog(this);
-
         mUser = mAuth.getCurrentUser();
         onlineUserID = mUser.getUid();
         reference = FirebaseDatabase.getInstance().getReference().child("tasks").child(onlineUserID);
@@ -97,10 +95,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onStart() {
         super.onStart();
+        loader.setTitle("Fetching Data");
+        loader.setMessage("Getting your data ...");
+        loader.show();
         FirebaseRecyclerOptions<Model> options = new FirebaseRecyclerOptions.Builder<Model>()
                 .setQuery(reference, Model.class)
                 .build();
-
         FirebaseRecyclerAdapter<Model, MyViewHolder> adapter;
         adapter = new FirebaseRecyclerAdapter<Model, MyViewHolder>(options) {
             @Override
@@ -108,22 +108,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 holder.setDate(model.getDate());
                 holder.setTask(model.getTask());
                 holder.setDesc(model.getDescription());
-
                 holder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         key = getRef(position).getKey();
                         task = model.getTask();
                         description = model.getDescription();
-
                         updateTask();
                     }
                 });
-
-
+            loader.dismiss();
             }
-
-
             @NonNull
             @Override
             public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -139,19 +134,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // show alert dialog
         AlertDialog.Builder myDialog = new AlertDialog.Builder(this);
         LayoutInflater inflater = LayoutInflater.from(this);
-
         View myView = inflater.inflate(R.layout.input_file, null);
         myDialog.setView(myView);
-
         final AlertDialog dialog = myDialog.create();
         dialog.setCancelable(false);
-
         final EditText task = myView.findViewById(R.id.task);
         final EditText description = myView.findViewById(R.id.description);
         Button save = myView.findViewById(R.id.saveBtn);
         Button cancel = myView.findViewById(R.id.CancelBtn);
         // cancel method/
-
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -170,8 +161,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
                     date = DateFormat.getDateInstance().format(new Date());
                 }
-
-
                 if (TextUtils.isEmpty(mTask)) {
                     task.setError("Task Required");
                     return;
@@ -183,7 +172,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     loader.setMessage("Adding your data");
                     loader.setCanceledOnTouchOutside(false);
                     loader.show();
-
                     Model model = new Model(mTask, mDescription, id, date);
                     reference.child(id).setValue(model).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
@@ -315,8 +303,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         dialog.show();
     }
     //--------------=====---/5
-    //--------------=====m4 fahmha---1/
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()){
@@ -332,10 +318,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 FirebaseAuth.getInstance().signOut();
                 Intent intent2 = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent2);
-
         }
         return true;
-        //--------------=====m4 fahmha---1/
-
     }
 }

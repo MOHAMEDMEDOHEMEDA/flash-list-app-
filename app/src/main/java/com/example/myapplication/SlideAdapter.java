@@ -41,7 +41,7 @@ public class SlideAdapter extends PagerAdapter {
             "Yara Hatem Ibrahim\n"
     };
     public String[] slide_descs= {
-            "faculty of computers and data science\n senior 2025\n ID:20221460231",
+            "Team Leader\nfaculty of computers and data science\n senior 2025\n ID:20221460231",
             "faculty of computers and data science\n senior 2025\n ID:20221452411",
             "faculty of computers and data science\n senior 2025\n ID:20221450912",
             "faculty of computers and data science\n senior 2025\n ID:20221374025",

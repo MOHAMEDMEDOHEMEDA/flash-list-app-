@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -33,6 +34,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private EditText email, password;
     private Button btnLogin;
+    private ProgressDialog progressDialog;
     private TextView textRegister;
     private CheckBox showPass;
     @Override
@@ -40,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         mAuth = FirebaseAuth.getInstance();
+        progressDialog = new ProgressDialog(LoginActivity.this);
         email = findViewById(R.id.login_email);
         password = findViewById(R.id.login_password);
         btnLogin = findViewById(R.id.login);
@@ -111,7 +114,9 @@ public class LoginActivity extends AppCompatActivity {
         }
         if (pass.isEmpty()) {
             password.setError("Password can not be empty");
-        } else {
+        }
+            progressDialog.setMessage("Loading ...");
+            progressDialog.show();
             mAuth.signInWithEmailAndPassword(user, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -119,22 +124,23 @@ public class LoginActivity extends AppCompatActivity {
                         if(mAuth.getCurrentUser().isEmailVerified()) {
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
+                            progressDialog.dismiss();
                             Toast.makeText(LoginActivity.this, "Welcome", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             finishAffinity();
                         }
                         else {
+                            progressDialog.dismiss();
                             Toast.makeText(LoginActivity.this, "Please Verify your account", Toast.LENGTH_SHORT).show();
                         }
                     } else {
+                        progressDialog.dismiss();
                         Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
                         updateUI(null);
                     }
                 }
             });
         }
-
-    }
     public void updateUI(FirebaseUser account) {
         if (account != null) {
             Log.d("Android", "Account is done = [" + account + "]");
