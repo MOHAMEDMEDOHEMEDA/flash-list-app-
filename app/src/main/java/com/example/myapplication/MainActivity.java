@@ -160,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 String mTask = task.getText().toString().trim();
                 String mDescription = description.getText().toString().trim();
                 String id = reference.push().getKey();
-                String mDate = date.toString().trim();
+                String mDate = null;
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
                     mDate = DateFormat.getDateInstance().format(new Date());
                 }
