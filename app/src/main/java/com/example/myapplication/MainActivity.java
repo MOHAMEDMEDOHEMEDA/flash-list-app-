@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.icu.text.DateFormat;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private String key = "";
     private String task;
     private String description;
+    private String date;
     //--------------=====---/
     private FirebaseAuth mAuth;
     DrawerLayout drawerLayout;
@@ -114,6 +116,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         key = getRef(position).getKey();
                         task = model.getTask();
                         description = model.getDescription();
+                        date= model.getDate();
                         updateTask();
                     }
                 });
@@ -157,9 +160,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 String mTask = task.getText().toString().trim();
                 String mDescription = description.getText().toString().trim();
                 String id = reference.push().getKey();
-                String date = null;
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                    date = DateFormat.getDateInstance().format(new Date());
+                String mDate = date.toString().trim();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    mDate = DateFormat.getDateInstance().format(new Date());
                 }
                 if (TextUtils.isEmpty(mTask)) {
                     task.setError("Task Required");
@@ -172,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     loader.setMessage("Adding your data");
                     loader.setCanceledOnTouchOutside(false);
                     loader.show();
-                    Model model = new Model(mTask, mDescription, id, date);
+                    Model model = new Model(mTask, mDescription, id, mDate);
                     reference.child(id).setValue(model).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
@@ -225,6 +228,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         public void setDate(String date) {
             TextView dateTextView = mView.findViewById(R.id.dateTv);
+            dateTextView.setText(date);
         }
     }
     private void updateTask() {
