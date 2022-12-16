@@ -4,7 +4,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -34,7 +33,6 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseFirestore fAuth;
     private EditText email, password,repassword,PhoneNumber;
     private Button btnRegister;
-    private ProgressDialog progressDialog;
     private String userID;
     private CheckBox showPass;
     private TextView textLogin,fName,lName;
@@ -43,7 +41,6 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         mAuth = FirebaseAuth.getInstance();
-        progressDialog = new ProgressDialog(RegisterActivity.this);
         fAuth = FirebaseFirestore.getInstance();
         fName = findViewById(R.id.fName);
         lName = findViewById(R.id.lName);
@@ -58,7 +55,6 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Register();
-
             }
         });
         showPass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -140,8 +136,8 @@ public class RegisterActivity extends AppCompatActivity {
             repassword.setError("Password not matched");
             password.setError("Password not matched");
         }
-            progressDialog.setMessage("Processing");
-            progressDialog.show();
+        else
+        {
             mAuth.createUserWithEmailAndPassword(Email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -166,27 +162,27 @@ public class RegisterActivity extends AppCompatActivity {
                                 });
                                 FirebaseUser User = mAuth.getCurrentUser();
                                 updateUI(User);
+                                Toast.makeText(RegisterActivity.this, "Please open your email and verify it", Toast.LENGTH_SHORT).show();
                                 fName.setText("");
                                 lName.setText("");
                                 email.setText("");
                                 PhoneNumber.setText("");
                                 password.setText("");
                                 repassword.setText("");
-                                Toast.makeText(RegisterActivity.this, "Please open your email and verify it", Toast.LENGTH_SHORT).show();
-                                progressDialog.dismiss();
                             }
                         });
                     }
                     else
                     {
-                        progressDialog.dismiss();
                         Toast.makeText(RegisterActivity.this, "Registration Failed", Toast.LENGTH_SHORT).show();
                         updateUI(null);
                     }
 
                 }
             });
+
         }
+    }
     public void updateUI(FirebaseUser account) {
         if (account != null) {
             Log.d("Android", "Register is done = [" + account + "]");

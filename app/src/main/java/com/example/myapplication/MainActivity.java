@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -307,7 +308,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()){
             case R.id.DeveloperId:
-                Intent intent = new Intent(MainActivity.this, MainActivityDevelopers.class);
+                Intent intent = new Intent(MainActivity.this,ActivityChoice.class);
                 startActivity(intent);
                 break;
             case R.id.UserInfo:

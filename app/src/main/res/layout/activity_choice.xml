@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ActivityChoice"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/img">
+
+    <Button
+        android:id="@+id/buttonAudio"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:text="Audio"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:background="@drawable/rectdesign"/>
+
+    <Button
+        android:id="@+id/buttonImage"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:text="Images"
+        android:background="@drawable/rectdesign"/>
+</LinearLayout>
