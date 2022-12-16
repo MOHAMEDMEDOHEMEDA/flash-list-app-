@@ -9,16 +9,16 @@
     android:gravity="center"
     android:background="@drawable/img">
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonAudio"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:text="Audio"
         android:textColor="@color/white"
         android:textStyle="bold"
-        android:background="@drawable/rectdesign"/>
+        android:background="@drawable/boxdesign"/>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonImage"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
@@ -26,5 +26,5 @@
         android:textColor="@color/white"
         android:textStyle="bold"
         android:text="Images"
-        android:background="@drawable/rectdesign"/>
+        android:background="@drawable/boxdesign"/>
 </LinearLayout>

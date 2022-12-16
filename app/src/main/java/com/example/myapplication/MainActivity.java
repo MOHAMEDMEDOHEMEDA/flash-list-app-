@@ -66,15 +66,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout= findViewById(R.id.drawer_layout);
         navigationView= findViewById(R.id.ViewId);
         toolbar = findViewById(R.id.toolbar);
+
+
         //---------------------toolbar------------------------/
+
         setSupportActionBar(toolbar);
         //---------------------navigation drawer menu------------------------/
-        navigationView.bringToFront();
         ActionBarDrawerToggle toggle =  new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+        navigationView.bringToFront();
         navigationView.setNavigationItemSelectedListener(this);
         //--------------=====---/1
+
         recyclerView = findViewById(R.id.recyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setReverseLayout(true);

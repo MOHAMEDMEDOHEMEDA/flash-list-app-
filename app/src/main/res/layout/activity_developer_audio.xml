@@ -31,13 +31,13 @@
         android:gravity="center"
         android:layout_marginBottom="60dp">
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/buttonStart"
+            android:id="@+id/buttonStop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/ic_pause" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/buttonStop"
+            android:id="@+id/buttonStart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/ic_play" />

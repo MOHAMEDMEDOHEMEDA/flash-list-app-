@@ -1,0 +1,432 @@
+Index: app/src/main/java/com/example/myapplication/MainActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.myapplication;\r\n\r\nimport android.annotation.SuppressLint;\r\nimport android.app.ProgressDialog;\r\nimport android.content.Intent;\r\nimport android.icu.text.DateFormat;\r\nimport android.os.Bundle;\r\nimport android.text.TextUtils;\r\nimport android.view.LayoutInflater;\r\nimport android.view.Menu;\r\nimport android.view.MenuItem;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.widget.Button;\r\nimport android.widget.EditText;\r\nimport android.widget.TextView;\r\nimport android.widget.Toast;\r\nimport android.icu.text.DecimalFormat;\r\nimport androidx.annotation.NonNull;\r\nimport androidx.appcompat.app.ActionBarDrawerToggle;\r\nimport androidx.appcompat.app.AlertDialog;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.appcompat.widget.Toolbar;\r\nimport androidx.core.view.GravityCompat;\r\nimport androidx.drawerlayout.widget.DrawerLayout;\r\nimport androidx.recyclerview.widget.LinearLayoutManager;\r\nimport androidx.recyclerview.widget.RecyclerView;\r\n\r\nimport com.firebase.ui.database.FirebaseRecyclerAdapter;\r\nimport com.firebase.ui.database.FirebaseRecyclerOptions;\r\nimport com.google.android.gms.tasks.OnCompleteListener;\r\nimport com.google.android.gms.tasks.Task;\r\nimport com.google.android.material.floatingactionbutton.FloatingActionButton;\r\nimport com.google.android.material.navigation.NavigationView;\r\nimport com.google.firebase.auth.FirebaseAuth;\r\nimport com.google.firebase.auth.FirebaseUser;\r\nimport com.google.firebase.database.DatabaseReference;\r\nimport com.google.firebase.database.FirebaseDatabase;\r\n\r\nimport java.util.Date;\r\n\r\npublic class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {\r\n    private RecyclerView recyclerView;\r\n    private FloatingActionButton floatingActionButton;\r\n    private DatabaseReference reference;\r\n    private FirebaseUser mUser;\r\n    private String onlineUserID;\r\n    private ProgressDialog loader;\r\n    private String key = \"\";\r\n    private String task;\r\n    private String description;\r\n    //--------------=====---/\r\n    private FirebaseAuth mAuth;\r\n    DrawerLayout drawerLayout;\r\n    NavigationView navigationView;\r\n    Toolbar toolbar;\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_main);\r\n        mAuth = FirebaseAuth.getInstance();\r\n         //---------------------Hooks------------------------/\r\n        drawerLayout= findViewById(R.id.drawer_layout);\r\n        navigationView= findViewById(R.id.ViewId);\r\n        toolbar = findViewById(R.id.toolbar);\r\n        //---------------------toolbar------------------------/\r\n        setSupportActionBar(toolbar);\r\n        //---------------------navigation drawer menu------------------------/\r\n        navigationView.bringToFront();\r\n        ActionBarDrawerToggle toggle =  new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);\r\n        drawerLayout.addDrawerListener(toggle);\r\n        toggle.syncState();\r\n        navigationView.setNavigationItemSelectedListener(this);\r\n        //--------------=====---/1\r\n        recyclerView = findViewById(R.id.recyclerView);\r\n        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);\r\n        linearLayoutManager.setReverseLayout(true);\r\n        linearLayoutManager.setStackFromEnd(true);\r\n        recyclerView.setHasFixedSize(true);\r\n        recyclerView.setLayoutManager(linearLayoutManager);\r\n        loader = new ProgressDialog(this);\r\n        mUser = mAuth.getCurrentUser();\r\n        onlineUserID = mUser.getUid();\r\n        reference = FirebaseDatabase.getInstance().getReference().child(\"tasks\").child(onlineUserID);\r\n\r\n        floatingActionButton = findViewById(R.id.fab);\r\n        floatingActionButton.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                addTask();\r\n            }\r\n        });\r\n    }\r\n\r\n    @Override\r\n    protected void onStart() {\r\n        super.onStart();\r\n        loader.setTitle(\"Fetching Data\");\r\n        loader.setMessage(\"Getting your data ...\");\r\n        loader.show();\r\n        FirebaseRecyclerOptions<Model> options = new FirebaseRecyclerOptions.Builder<Model>()\r\n                .setQuery(reference, Model.class)\r\n                .build();\r\n        FirebaseRecyclerAdapter<Model, MyViewHolder> adapter;\r\n        adapter = new FirebaseRecyclerAdapter<Model, MyViewHolder>(options) {\r\n            @Override\r\n            protected void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint(\"RecyclerView\") final int position, @NonNull final Model model) {\r\n                holder.setDate(model.getDate());\r\n                holder.setTask(model.getTask());\r\n                holder.setDesc(model.getDescription());\r\n                holder.mView.setOnClickListener(new View.OnClickListener() {\r\n                    @Override\r\n                    public void onClick(View v) {\r\n                        key = getRef(position).getKey();\r\n                        task = model.getTask();\r\n                        description = model.getDescription();\r\n                        updateTask();\r\n                    }\r\n                });\r\n            loader.dismiss();\r\n            }\r\n            @NonNull\r\n            @Override\r\n            public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {\r\n                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.retrieved_layout, parent, false);\r\n                return new MyViewHolder(view);\r\n            }\r\n        };\r\n        recyclerView.setAdapter(adapter);\r\n        adapter.startListening();\r\n    }\r\n    //--------------=====---/2\r\n    private void addTask() {\r\n        // show alert dialog\r\n        AlertDialog.Builder myDialog = new AlertDialog.Builder(this);\r\n        LayoutInflater inflater = LayoutInflater.from(this);\r\n        View myView = inflater.inflate(R.layout.input_file, null);\r\n        myDialog.setView(myView);\r\n        final AlertDialog dialog = myDialog.create();\r\n        dialog.setCancelable(false);\r\n        final EditText task = myView.findViewById(R.id.task);\r\n        final EditText description = myView.findViewById(R.id.description);\r\n        Button save = myView.findViewById(R.id.saveBtn);\r\n        Button cancel = myView.findViewById(R.id.CancelBtn);\r\n        // cancel method/\r\n        cancel.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                dialog.dismiss();\r\n            }\r\n        });\r\n        // save method/\r\n\r\n        save.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                String mTask = task.getText().toString().trim();\r\n                String mDescription = description.getText().toString().trim();\r\n                String id = reference.push().getKey();\r\n                String date = null;\r\n                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {\r\n                    date = DateFormat.getDateInstance().format(new Date());\r\n                }\r\n                if (TextUtils.isEmpty(mTask)) {\r\n                    task.setError(\"Task Required\");\r\n                    return;\r\n                }\r\n                if (TextUtils.isEmpty(mDescription)) {\r\n                    description.setError(\"Description Required\");\r\n                    return;\r\n                } else {\r\n                    loader.setMessage(\"Adding your data\");\r\n                    loader.setCanceledOnTouchOutside(false);\r\n                    loader.show();\r\n                    Model model = new Model(mTask, mDescription, id, date);\r\n                    reference.child(id).setValue(model).addOnCompleteListener(new OnCompleteListener<Void>() {\r\n                        @Override\r\n                        public void onComplete(@NonNull Task<Void> task) {\r\n                            if (task.isSuccessful()) {\r\n                                Toast.makeText(MainActivity.this, \"Task has been inserted successfully\", Toast.LENGTH_SHORT).show();\r\n                                loader.dismiss();\r\n                            } else {\r\n                                String error = task.getException().toString();\r\n                                Toast.makeText(MainActivity.this, \"Failed: \" + error, Toast.LENGTH_SHORT).show();\r\n                                loader.dismiss();\r\n                            }\r\n                        }\r\n                    });\r\n                }\r\n                dialog.dismiss();\r\n            }\r\n        });\r\n        dialog.show();\r\n    }\r\n    //--------------=====---/2\r\n\r\n    @Override\r\n    public void onBackPressed() {\r\n        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {\r\n            drawerLayout.closeDrawer(GravityCompat.START);\r\n        }else{\r\n            super.onBackPressed();\r\n\r\n        }\r\n    }\r\n    //--------------=====---/4\r\n    //--------------=====---/5\r\n    public static class MyViewHolder extends RecyclerView.ViewHolder {\r\n        View mView;\r\n\r\n        public MyViewHolder(@NonNull View itemView) {\r\n            super(itemView);\r\n            mView = itemView;\r\n        }\r\n\r\n        public void setTask(String task) {\r\n            TextView taskTectView = mView.findViewById(R.id.taskTv);\r\n            taskTectView.setText(task);\r\n        }\r\n\r\n        public void setDesc(String desc) {\r\n            TextView descTectView = mView.findViewById(R.id.descriptionTv);\r\n            descTectView.setText(desc);\r\n        }\r\n\r\n        public void setDate(String date) {\r\n            TextView dateTextView = mView.findViewById(R.id.dateTv);\r\n        }\r\n    }\r\n    private void updateTask() {\r\n        AlertDialog.Builder myDialog = new AlertDialog.Builder(this);\r\n        LayoutInflater inflater = LayoutInflater.from(this);\r\n        View view = inflater.inflate(R.layout.update_data, null);\r\n        myDialog.setView(view);\r\n\r\n        final AlertDialog dialog = myDialog.create();\r\n\r\n        final EditText mTask = view.findViewById(R.id.mEditTextTask);\r\n        final EditText mDescription = view.findViewById(R.id.mEditTextDescription);\r\n\r\n        mTask.setText(task);\r\n        mTask.setSelection(task.length());\r\n\r\n        mDescription.setText(description);\r\n        mDescription.setSelection(description.length());\r\n\r\n        Button delButton = view.findViewById(R.id.btnDelete);\r\n        Button updateButton = view.findViewById(R.id.btnUpdate);\r\n\r\n        updateButton.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                //need to merg with add task   1 /\r\n\r\n                task = mTask.getText().toString().trim();\r\n                description = mDescription.getText().toString().trim();\r\n\r\n                String date = null;\r\n                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {\r\n                    date = DateFormat.getDateInstance().format(new Date());\r\n                }\r\n\r\n                Model model = new Model(task, description, key, date);\r\n                //need to merg with add task   1 /\r\n\r\n                reference.child(key).setValue(model).addOnCompleteListener(new OnCompleteListener<Void>() {\r\n                    @Override\r\n                    public void onComplete(@NonNull Task<Void> task) {\r\n\r\n                        if (task.isSuccessful()){\r\n                            Toast.makeText(MainActivity.this, \"Data has been updated successfully\", Toast.LENGTH_SHORT).show();\r\n                        }else {\r\n                            String err = task.getException().toString();\r\n                            Toast.makeText(MainActivity.this, \"update failed \"+err, Toast.LENGTH_SHORT).show();\r\n                        }\r\n\r\n                    }\r\n                });\r\n\r\n                dialog.dismiss();\r\n\r\n            }\r\n        });\r\n\r\n        delButton.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                reference.child(key).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {\r\n                    @Override\r\n                    public void onComplete(@NonNull Task<Void> task) {\r\n                        if (task.isSuccessful()){\r\n                            Toast.makeText(MainActivity.this, \"Task deleted successfully\", Toast.LENGTH_SHORT).show();\r\n                        }else {\r\n                            String err = task.getException().toString();\r\n                            Toast.makeText(MainActivity.this, \"Failed to delete task \"+ err, Toast.LENGTH_SHORT).show();\r\n                        }\r\n                    }\r\n                });\r\n                dialog.dismiss();\r\n            }\r\n        });\r\n\r\n        dialog.show();\r\n    }\r\n    //--------------=====---/5\r\n    @Override\r\n    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {\r\n        switch (menuItem.getItemId()){\r\n            case R.id.DeveloperId:\r\n                Intent intent = new Intent(MainActivity.this, MainActivityDevelopers.class);\r\n                startActivity(intent);\r\n                break;\r\n            case R.id.UserInfo:\r\n                Intent intent1 = new Intent(MainActivity.this, UserInformation.class);\r\n                startActivity(intent1);\r\n                break;\r\n            case R.id.LogoutId:\r\n                FirebaseAuth.getInstance().signOut();\r\n                Intent intent2 = new Intent(MainActivity.this, LoginActivity.class);\r\n                startActivity(intent2);\r\n        }\r\n        return true;\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/myapplication/MainActivity.java b/app/src/main/java/com/example/myapplication/MainActivity.java
+--- a/app/src/main/java/com/example/myapplication/MainActivity.java	(revision c7925ea9e93f566f7bf12fd68d5c9c58f825dc54)
++++ b/app/src/main/java/com/example/myapplication/MainActivity.java	(date 1671177370045)
+@@ -54,6 +54,7 @@
+     DrawerLayout drawerLayout;
+     NavigationView navigationView;
+     Toolbar toolbar;
++
+     @Override
+     protected void onCreate(Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
+@@ -63,15 +64,19 @@
+         drawerLayout= findViewById(R.id.drawer_layout);
+         navigationView= findViewById(R.id.ViewId);
+         toolbar = findViewById(R.id.toolbar);
++
++
+         //---------------------toolbar------------------------/
++
+         setSupportActionBar(toolbar);
+         //---------------------navigation drawer menu------------------------/
+-        navigationView.bringToFront();
+         ActionBarDrawerToggle toggle =  new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
+         drawerLayout.addDrawerListener(toggle);
+         toggle.syncState();
++        navigationView.bringToFront();
+         navigationView.setNavigationItemSelectedListener(this);
+         //--------------=====---/1
++
+         recyclerView = findViewById(R.id.recyclerView);
+         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+         linearLayoutManager.setReverseLayout(true);
+@@ -307,7 +312,7 @@
+     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+         switch (menuItem.getItemId()){
+             case R.id.DeveloperId:
+-                Intent intent = new Intent(MainActivity.this, MainActivityDevelopers.class);
++                Intent intent = new Intent(MainActivity.this,ActivityChoice.class);
+                 startActivity(intent);
+                 break;
+             case R.id.UserInfo:
+Index: app/src/main/res/menu/main_menu.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<menu xmlns:android=\"http://schemas.android.com/apk/res/android\">\r\n\r\n    <item android:title=\"Account\"\r\n        android:fontFamily=\"@font/aclonica\"\r\n        >\r\n\r\n        <menu>\r\n            <group android:checkableBehavior=\"single\">\r\n                <item\r\n                    android:id=\"@+id/UserInfo\"\r\n                    android:fontFamily=\"@font/aclonica\"\r\n                    android:title=\"User Information\"\r\n                    android:icon=\"@drawable/info_icon\"/>\r\n                <item\r\n                    android:id=\"@+id/DeveloperId\"\r\n                    android:title=\"Developers\"\r\n                    android:fontFamily=\"@font/aclonica\"\r\n                    android:icon=\"@drawable/people_icon\"/>\r\n                <item\r\n                    android:id=\"@+id/LogoutId\"\r\n                    android:title=\"Logout\"\r\n                    android:fontFamily=\"@font/aclonica\"\r\n                    android:icon=\"@drawable/logout_icon\"/>\r\n            </group>\r\n        </menu>\r\n    </item>\r\n\r\n</menu>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/menu/main_menu.xml b/app/src/main/res/menu/main_menu.xml
+--- a/app/src/main/res/menu/main_menu.xml	(revision c7925ea9e93f566f7bf12fd68d5c9c58f825dc54)
++++ b/app/src/main/res/menu/main_menu.xml	(date 1671043448382)
+@@ -2,8 +2,7 @@
+ <menu xmlns:android="http://schemas.android.com/apk/res/android">
+ 
+     <item android:title="Account"
+-        android:fontFamily="@font/aclonica"
+-        >
++        android:fontFamily="@font/aclonica">
+ 
+         <menu>
+             <group android:checkableBehavior="single">
+Index: app/src/main/java/com/example/myapplication/MyService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/myapplication/MyService.java b/app/src/main/java/com/example/myapplication/MyService.java
+new file mode 100644
+--- /dev/null	(date 1670788250105)
++++ b/app/src/main/java/com/example/myapplication/MyService.java	(date 1670788250105)
+@@ -0,0 +1,33 @@
++package com.example.myapplication;
++
++import android.app.Service;
++import android.content.Intent;
++import android.media.MediaPlayer;
++import android.os.IBinder;
++import android.widget.Toast;
++
++public class MyService extends Service {
++    MediaPlayer myPlayer;
++
++    public MyService() {
++    }
++    @Override
++    public IBinder onBind(Intent intent) {
++        return null;
++    }
++
++    @Override  public void onCreate() {
++        Toast.makeText(this, "Service Created", Toast.LENGTH_LONG).show();
++        myPlayer= MediaPlayer.create(this, R.raw.sample);
++        myPlayer.setLooping(false); // Set looping
++    }
++    @Override
++    public void onStart(Intent intent, int startid) {
++        Toast.makeText(this, "Service Started", Toast.LENGTH_LONG).show();
++        myPlayer.start( );
++    }
++    @Override  public void onDestroy( ) {
++        Toast.makeText(this, "Service Stopped", Toast.LENGTH_LONG).show();
++        myPlayer.stop( );
++    }
++}
+\ No newline at end of file
+Index: app/src/main/res/drawable/ic_headset.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/drawable/ic_headset.xml b/app/src/main/res/drawable/ic_headset.xml
+new file mode 100644
+--- /dev/null	(date 1670790820596)
++++ b/app/src/main/res/drawable/ic_headset.xml	(date 1670790820596)
+@@ -0,0 +1,5 @@
++<vector android:height="24dp" android:tint="#012366"
++    android:viewportHeight="24" android:viewportWidth="24"
++    android:width="24dp" xmlns:android="http://schemas.android.com/apk/res/android">
++    <path android:fillColor="@android:color/white" android:pathData="M12,1c-4.97,0 -9,4.03 -9,9v7c0,1.66 1.34,3 3,3h3v-8H5v-2c0,-3.87 3.13,-7 7,-7s7,3.13 7,7v2h-4v8h4v1h-7v2h6c1.66,0 3,-1.34 3,-3V10c0,-4.97 -4.03,-9 -9,-9z"/>
++</vector>
+Index: app/src/main/java/com/example/myapplication/DeveloperAudio.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/myapplication/DeveloperAudio.java b/app/src/main/java/com/example/myapplication/DeveloperAudio.java
+new file mode 100644
+--- /dev/null	(date 1670788250104)
++++ b/app/src/main/java/com/example/myapplication/DeveloperAudio.java	(date 1670788250104)
+@@ -0,0 +1,35 @@
++package com.example.myapplication;
++
++import androidx.appcompat.app.AppCompatActivity;
++
++import android.content.Intent;
++import android.os.Bundle;
++import android.view.View;
++import android.widget.Button;
++
++public class DeveloperAudio extends AppCompatActivity implements View.OnClickListener{
++    Button buttonStart, buttonStop;
++    @Override
++    protected void onCreate(Bundle savedInstanceState) {
++        super.onCreate(savedInstanceState);
++        setContentView(R.layout.activity_developer_audio);
++
++        buttonStart= (Button) findViewById(R.id.buttonStart);
++        buttonStop= (Button) findViewById(R.id.buttonStop);
++        buttonStart.setOnClickListener(this);
++        buttonStop.setOnClickListener(this);
++    }
++
++    @Override
++    public void onClick(View src) {
++        switch (src.getId()) {
++            case R.id.buttonStart:
++                startService(new Intent(this, MyService.class));
++                break;
++
++            case R.id.buttonStop:
++                stopService(new Intent(this, MyService.class));
++                break;
++        }
++    }
++}
+\ No newline at end of file
+Index: app/src/main/res/drawable/ic_pause.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/drawable/ic_pause.xml b/app/src/main/res/drawable/ic_pause.xml
+new file mode 100644
+--- /dev/null	(date 1670788784205)
++++ b/app/src/main/res/drawable/ic_pause.xml	(date 1670788784205)
+@@ -0,0 +1,5 @@
++<vector android:height="24dp" android:tint="#071273"
++    android:viewportHeight="24" android:viewportWidth="24"
++    android:width="24dp" xmlns:android="http://schemas.android.com/apk/res/android">
++    <path android:fillColor="@android:color/white" android:pathData="M12,2C6.48,2 2,6.48 2,12s4.48,10 10,10 10,-4.48 10,-10S17.52,2 12,2zM11,16L9,16L9,8h2v8zM15,16h-2L13,8h2v8z"/>
++</vector>
+Index: app/src/main/java/com/example/myapplication/ActivityChoice.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/myapplication/ActivityChoice.java b/app/src/main/java/com/example/myapplication/ActivityChoice.java
+new file mode 100644
+--- /dev/null	(date 1670788250103)
++++ b/app/src/main/java/com/example/myapplication/ActivityChoice.java	(date 1670788250103)
+@@ -0,0 +1,36 @@
++package com.example.myapplication;
++
++import androidx.appcompat.app.AppCompatActivity;
++
++import android.content.Intent;
++import android.os.Bundle;
++import android.view.View;
++import android.widget.Button;
++
++public class ActivityChoice extends AppCompatActivity implements View.OnClickListener {
++Button image, audio;
++    @Override
++    protected void onCreate(Bundle savedInstanceState) {
++        super.onCreate(savedInstanceState);
++        setContentView(R.layout.activity_choice);
++        audio= findViewById(R.id.buttonAudio);
++        image=  findViewById(R.id.buttonImage);
++        audio.setOnClickListener(this);
++        image.setOnClickListener(this);
++    }
++
++    @Override
++    public void onClick(View v) {
++        switch (v.getId()) {
++
++            case R.id.buttonAudio:
++                Intent intent = new Intent(this, DeveloperAudio.class);
++                startActivity(intent);
++                break;
++            case R.id.buttonImage:
++                Intent intent2 = new Intent(this, MainActivityDevelopers.class);
++                startActivity(intent2);
++                break;
++        }
++    }
++}
+\ No newline at end of file
+Index: app/src/main/res/layout/activity_developer_audio.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_developer_audio.xml b/app/src/main/res/layout/activity_developer_audio.xml
+new file mode 100644
+--- /dev/null	(date 1670788574503)
++++ b/app/src/main/res/layout/activity_developer_audio.xml	(date 1670788574503)
+@@ -0,0 +1,45 @@
++<?xml version="1.0" encoding="utf-8"?>
++<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    tools:context=".DeveloperAudio"
++    android:orientation="vertical"
++    android:gravity="center"
++    android:background="@drawable/backlog">
++    <TextView
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:id="@+id/text1"
++        android:text="Explanation of the project idea"
++        android:layout_marginBottom="110dp"
++        android:textColor="@color/white"
++        android:textSize="20dp"/>
++
++
++    <ImageView
++        android:id="@+id/imageView4"
++        android:layout_width="match_parent"
++        android:layout_height="278dp"
++        app:srcCompat="@drawable/ic_headset"/>
++
++    <LinearLayout
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:orientation="horizontal"
++        android:gravity="center"
++        android:layout_marginBottom="60dp">
++        <androidx.appcompat.widget.AppCompatButton
++            android:id="@+id/buttonStop"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:background="@drawable/ic_pause" />
++
++        <androidx.appcompat.widget.AppCompatButton
++            android:id="@+id/buttonStart"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:background="@drawable/ic_play" />
++    </LinearLayout>
++</LinearLayout>
+\ No newline at end of file
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\">\r\n    <uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>\r\n    <uses-permission android:name=\"android.permission.INTERNET\" />\r\n\r\n    <application\r\n        android:allowBackup=\"true\"\r\n        android:dataExtractionRules=\"@xml/data_extraction_rules\"\r\n        android:fullBackupContent=\"@xml/backup_rules\"\r\n        android:icon=\"@drawable/logoo\"\r\n        android:label=\"@string/app_name\"\r\n        android:roundIcon=\"@drawable/logoo\"\r\n        android:supportsRtl=\"true\"\r\n        android:theme=\"@style/Theme.MyApplication\"\r\n        tools:targetApi=\"31\">\r\n        <activity\r\n            android:name=\".UserInformation\">\r\n            <meta-data\r\n                android:name=\"android.app.lib_name\"\r\n                android:value=\"\" />\r\n        </activity>\r\n        <activity\r\n            android:name=\".WelcomePage\">\r\n            <meta-data\r\n                android:name=\"android.app.lib_name\"\r\n                android:value=\"\" />\r\n        </activity>\r\n        <activity\r\n            android:name=\".MainActivityDevelopers\">\r\n            <meta-data\r\n                android:name=\"android.app.lib_name\"\r\n                android:value=\"\" />\r\n        </activity>\r\n        <activity\r\n            android:name=\".RegisterActivity\">\r\n            <meta-data\r\n                android:name=\"android.app.lib_name\"\r\n                android:value=\"\" />\r\n        </activity>\r\n        <activity\r\n            android:name=\".LoginActivity\">\r\n            <meta-data\r\n                android:name=\"android.app.lib_name\"\r\n                android:value=\"\" />\r\n        </activity>\r\n        <activity\r\n            android:name=\".splash\"\r\n            android:exported=\"true\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.MAIN\" />\r\n\r\n                <category android:name=\"android.intent.category.LAUNCHER\" />\r\n            </intent-filter>\r\n\r\n            <meta-data\r\n                android:name=\"android.app.lib_name\"\r\n                android:value=\"\" />\r\n        </activity>\r\n        <activity\r\n            android:name=\".MainActivity\">\r\n            <meta-data\r\n                android:name=\"android.app.lib_name\"\r\n                android:value=\"\" />\r\n        </activity>\r\n    </application>\r\n\r\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/AndroidManifest.xml b/app/src/main/AndroidManifest.xml
+--- a/app/src/main/AndroidManifest.xml	(revision c7925ea9e93f566f7bf12fd68d5c9c58f825dc54)
++++ b/app/src/main/AndroidManifest.xml	(date 1670788250103)
+@@ -1,7 +1,8 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:tools="http://schemas.android.com/tools">
+-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
++
++    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+     <uses-permission android:name="android.permission.INTERNET" />
+ 
+     <application
+@@ -15,31 +16,46 @@
+         android:theme="@style/Theme.MyApplication"
+         tools:targetApi="31">
+         <activity
+-            android:name=".UserInformation">
++            android:name=".ActivityChoice"
++            android:exported="false">
+             <meta-data
+                 android:name="android.app.lib_name"
+                 android:value="" />
+         </activity>
+         <activity
+-            android:name=".WelcomePage">
++            android:name=".DeveloperAudio"
++            android:exported="false">
+             <meta-data
+                 android:name="android.app.lib_name"
+                 android:value="" />
+         </activity>
+-        <activity
+-            android:name=".MainActivityDevelopers">
++
++        <service
++            android:name=".MyService"
++            android:enabled="true"
++            android:exported="true" />
++
++        <activity android:name=".UserInformation">
+             <meta-data
+                 android:name="android.app.lib_name"
+                 android:value="" />
+         </activity>
+-        <activity
+-            android:name=".RegisterActivity">
++        <activity android:name=".WelcomePage">
+             <meta-data
+                 android:name="android.app.lib_name"
+                 android:value="" />
+         </activity>
+-        <activity
+-            android:name=".LoginActivity">
++        <activity android:name=".MainActivityDevelopers">
++            <meta-data
++                android:name="android.app.lib_name"
++                android:value="" />
++        </activity>
++        <activity android:name=".RegisterActivity">
++            <meta-data
++                android:name="android.app.lib_name"
++                android:value="" />
++        </activity>
++        <activity android:name=".LoginActivity">
+             <meta-data
+                 android:name="android.app.lib_name"
+                 android:value="" />
+@@ -57,8 +73,7 @@
+                 android:name="android.app.lib_name"
+                 android:value="" />
+         </activity>
+-        <activity
+-            android:name=".MainActivity">
++        <activity android:name=".MainActivity">
+             <meta-data
+                 android:name="android.app.lib_name"
+                 android:value="" />
+Index: app/src/main/res/layout/activity_choice.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_choice.xml b/app/src/main/res/layout/activity_choice.xml
+new file mode 100644
+--- /dev/null	(date 1670790984634)
++++ b/app/src/main/res/layout/activity_choice.xml	(date 1670790984634)
+@@ -0,0 +1,30 @@
++<?xml version="1.0" encoding="utf-8"?>
++<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    tools:context=".ActivityChoice"
++    android:orientation="vertical"
++    android:gravity="center"
++    android:background="@drawable/img">
++
++    <androidx.appcompat.widget.AppCompatButton
++        android:id="@+id/buttonAudio"
++        android:layout_width="180dp"
++        android:layout_height="wrap_content"
++        android:text="Audio"
++        android:textColor="@color/white"
++        android:textStyle="bold"
++        android:background="@drawable/boxdesign"/>
++
++    <androidx.appcompat.widget.AppCompatButton
++        android:id="@+id/buttonImage"
++        android:layout_width="180dp"
++        android:layout_height="wrap_content"
++        android:layout_marginTop="15dp"
++        android:textColor="@color/white"
++        android:textStyle="bold"
++        android:text="Images"
++        android:background="@drawable/boxdesign"/>
++</LinearLayout>
+\ No newline at end of file
+Index: app/src/main/res/drawable/ic_play.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/drawable/ic_play.xml b/app/src/main/res/drawable/ic_play.xml
+new file mode 100644
+--- /dev/null	(date 1670789381688)
++++ b/app/src/main/res/drawable/ic_play.xml	(date 1670789381688)
+@@ -0,0 +1,5 @@
++<vector android:height="24dp" android:tint="#071273"
++    android:viewportHeight="24" android:viewportWidth="24"
++    android:width="24dp" xmlns:android="http://schemas.android.com/apk/res/android">
++    <path android:fillColor="@android:color/white" android:pathData="M12,2C6.48,2 2,6.48 2,12s4.48,10 10,10 10,-4.48 10,-10S17.52,2 12,2zM10,16.5v-9l6,4.5 -6,4.5z"/>
++</vector>
