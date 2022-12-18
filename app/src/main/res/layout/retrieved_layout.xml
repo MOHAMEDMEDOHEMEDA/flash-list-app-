@@ -63,6 +63,12 @@
                 android:textColor="#000"
                 android:textSize="15sp" />
 
+            <CheckBox
+                android:id="@+id/checkBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="done" />
+
         </LinearLayout>
 
     </LinearLayout>

@@ -8,13 +8,14 @@
     android:fitsSystemWindows="true"
     tools:context=".MainActivity"
     tools:openDrawer="start">
+
     <com.google.android.material.navigation.NavigationView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
         android:id="@+id/ViewId"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
         app:headerLayout="@layout/header"
-        app:menu="@menu/main_menu"
-        android:layout_gravity="start">
+        app:menu="@menu/main_menu">
 
     </com.google.android.material.navigation.NavigationView>
 
@@ -24,7 +25,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <androidx.appcompat.widget.Toolbar
@@ -53,8 +54,11 @@
                 android:layout_gravity="bottom|end"
                 android:layout_margin="16dp"
                 android:contentDescription="@string/todo"
+
+                android:showAsAction="ifRoom"
                 android:src="@drawable/ic_add_black_24dp"
-                app:backgroundTint="#FFF" />
+                app:backgroundTint="#fff" />
+
         </LinearLayout>
     </ScrollView>
 
