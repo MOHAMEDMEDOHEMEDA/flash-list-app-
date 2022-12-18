@@ -2,8 +2,11 @@ package com.example.myapplication;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.icu.text.DateFormat;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -57,7 +60,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
-    CheckBox checkBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,9 +105,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onStart() {
         super.onStart();
-        loader.setTitle("Fetching Data");
-        loader.setMessage("Getting your data ...");
-        loader.show();
+        if(isInternetConnection()){
+            loader.setTitle("Fetching Data");
+            loader.setMessage("Getting your data ...");
+            loader.show();
+        }else {
+            Toast.makeText(MainActivity.this, "no internet connection!! " , Toast.LENGTH_SHORT).show();
+
+        }
+
+
         FirebaseRecyclerOptions<Model> options = new FirebaseRecyclerOptions.Builder<Model>()
                 .setQuery(reference, Model.class)
                 .build();
@@ -331,4 +340,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         return true;
     }
+    public  boolean isInternetConnection()
+    {
+        boolean connected = false;
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            //we are connected to a network
+            connected = true;
+        }
+        else
+            connected = false;
+
+    return connected;
+    }
+
+
 }
