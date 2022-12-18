@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.icu.text.DateFormat;
+import android.icu.text.SimpleDateFormat;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -175,9 +176,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 String mTask = task.getText().toString().trim();
                 String mDescription = description.getText().toString().trim();
                 String id = reference.push().getKey();
-                String mDate = null;
+                String currentDateandTime = null;
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                    mDate = DateFormat.getDateInstance().format(new Date());
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd 'at' HH:mm ");
+                    currentDateandTime = sdf.format(new Date());
+
                 }
                 if (TextUtils.isEmpty(mTask)) {
                     task.setError("Task Required");
@@ -190,7 +193,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     loader.setMessage("Adding your data");
                     loader.setCanceledOnTouchOutside(false);
                     loader.show();
-                    Model model = new Model(mTask, mDescription, id, mDate);
+                    Model model = new Model(mTask, mDescription, id, currentDateandTime);
                     reference.child(id).setValue(model).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
@@ -276,7 +279,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 String date = null;
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                    date = DateFormat.getDateInstance().format(new Date());
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd 'at' HH:mm ");
+                    date = sdf.format(new Date());
                 }
 
                 Model model = new Model(task, description, key, date);
