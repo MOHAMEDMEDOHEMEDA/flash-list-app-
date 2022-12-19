@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Account"
+    <item android:title="@string/account"
         android:fontFamily="@font/aclonica">
 
         <menu>
@@ -9,16 +9,16 @@
                 <item
                     android:id="@+id/UserInfo"
                     android:fontFamily="@font/aclonica"
-                    android:title="User Information"
+                    android:title="@string/user_information"
                     android:icon="@drawable/info_icon"/>
                 <item
                     android:id="@+id/DeveloperId"
-                    android:title="Developers"
+                    android:title="@string/developers"
                     android:fontFamily="@font/aclonica"
                     android:icon="@drawable/people_icon"/>
                 <item
                     android:id="@+id/LogoutId"
-                    android:title="Logout"
+                    android:title="@string/logout"
                     android:fontFamily="@font/aclonica"
                     android:icon="@drawable/logout_icon"/>
             </group>

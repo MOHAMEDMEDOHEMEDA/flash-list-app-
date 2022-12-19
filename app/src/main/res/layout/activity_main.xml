@@ -23,9 +23,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <androidx.appcompat.widget.Toolbar
@@ -53,13 +53,12 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
                 android:layout_margin="16dp"
-                android:contentDescription="@string/todo"
-
                 android:showAsAction="ifRoom"
                 android:src="@drawable/ic_add_black_24dp"
-                app:backgroundTint="#fff" />
+                app:backgroundTint="#fff"
+                tools:ignore="ImageContrastCheck" />
 
-        </LinearLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
     </ScrollView>
 
 </androidx.drawerlayout.widget.DrawerLayout>

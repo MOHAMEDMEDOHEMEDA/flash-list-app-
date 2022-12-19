@@ -22,13 +22,13 @@
 
             <TextView
                 android:id="@+id/dateTv"
-                android:layout_width="200dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/background_design"
+                android:background="@drawable/rectdesign"
                 android:fontFamily="@font/aclonica"
                 android:gravity="center"
                 android:padding="10dp"
-                android:text="Set Date"
+                android:text="@string/set_date"
                 android:textColor="#fff"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -47,7 +47,7 @@
                 android:fontFamily="@font/aclonica"
                 android:maxLines="1"
                 android:padding="5dp"
-                android:text="Task"
+                android:text="@string/taskTitle"
                 android:textColor="#000"
                 android:textSize="15sp"
                 android:textStyle="bold" />
@@ -57,9 +57,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:textStyle="bold"
                 android:fontFamily="@font/aclonica"
                 android:maxLines="3"
-                android:text="Description"
+                android:text="@string/description"
                 android:textColor="#000"
                 android:textSize="15sp" />
 
@@ -67,7 +68,10 @@
                 android:id="@+id/checkBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="done" />
+                android:layout_gravity="center"
+                android:fontFamily="@font/aclonica"
+                android:textStyle="bold"
+                android:text="@string/done" />
 
         </LinearLayout>
 

@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 public class DeveloperAudio extends AppCompatActivity implements View.OnClickListener{
-    Button buttonStart, buttonStop;
+    Button buttonStart,buttonStop;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,7 +26,6 @@ public class DeveloperAudio extends AppCompatActivity implements View.OnClickLis
             case R.id.buttonStart:
                 startService(new Intent(this, MyService.class));
                 break;
-
             case R.id.buttonStop:
                 stopService(new Intent(this, MyService.class));
                 break;

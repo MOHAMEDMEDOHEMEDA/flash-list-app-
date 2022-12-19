@@ -18,7 +18,7 @@
         android:gravity="center"
         android:includeFontPadding="false"
         android:shadowColor="#FFFFFF"
-        android:text="Login"
+        android:text="@string/login"
         android:textColor="#FDFDFD"
         android:textSize="30sp" />
 
@@ -26,7 +26,7 @@
         android:id="@+id/imageView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:contentDescription="LOGO"
+        android:contentDescription="@string/logo"
         app:srcCompat="@drawable/logoo" />
 
     <androidx.appcompat.widget.AppCompatEditText
@@ -37,7 +37,7 @@
         android:background="@drawable/boxdesign"
         android:fontFamily="@font/aclonica"
         android:gravity="center"
-        android:hint="email"
+        android:hint="@string/EmailLogin"
         android:inputType="textEmailAddress"
         android:minHeight="48dp"
         android:textColor="#FFFFFF"
@@ -52,7 +52,7 @@
         android:background="@drawable/boxdesign"
         android:fontFamily="@font/aclonica"
         android:gravity="center"
-        android:hint="password"
+        android:hint="@string/passwordLogin"
         android:importantForAutofill="no"
         android:inputType="textPassword"
         android:minHeight="48dp"
@@ -65,7 +65,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/aclonica"
-        android:text="Show Password"
+        android:minHeight="48dp"
+        android:text="@string/show_password"
         android:textColor="@color/black"
         android:textStyle="bold" />
 
@@ -77,7 +78,7 @@
         android:background="@drawable/boxdesign"
         android:fontFamily="@font/aclonica"
         android:minHeight="48dp"
-        android:text="Login"
+        android:text="@string/loginPress"
         android:textColor="#FDFDFD"
         android:textStyle="bold"
         tools:ignore="TouchTargetSizeCheck,DuplicateSpeakableTextCheck" />
@@ -88,7 +89,7 @@
         android:layout_height="47dp"
         android:fontFamily="@font/aclonica"
         android:shadowColor="#000000"
-        android:text="New User Register"
+        android:text="@string/new_user_register"
         android:textAlignment="center"
         android:textColor="#000000"
         android:textStyle="bold" />

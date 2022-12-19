@@ -4,24 +4,19 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.icu.text.DateFormat;
 import android.icu.text.SimpleDateFormat;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.icu.text.DecimalFormat;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
@@ -61,7 +56,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,10 +65,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout= findViewById(R.id.drawer_layout);
         navigationView= findViewById(R.id.ViewId);
         toolbar = findViewById(R.id.toolbar);
-
-
         //---------------------toolbar------------------------/
-
         setSupportActionBar(toolbar);
         //---------------------navigation drawer menu------------------------/
         ActionBarDrawerToggle toggle =  new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
@@ -83,7 +74,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.bringToFront();
         navigationView.setNavigationItemSelectedListener(this);
         //--------------=====---/1
-
         recyclerView = findViewById(R.id.recyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setReverseLayout(true);
@@ -102,7 +92,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
     }
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -111,11 +100,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             loader.setMessage("Getting your data ...");
             loader.show();
         }else {
-            Toast.makeText(MainActivity.this, "no internet connection!! " , Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "No Internet Connection !! " , Toast.LENGTH_SHORT).show();
 
         }
-
-
         FirebaseRecyclerOptions<Model> options = new FirebaseRecyclerOptions.Builder<Model>()
                 .setQuery(reference, Model.class)
                 .build();

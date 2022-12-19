@@ -1,22 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Flash List</string>
-    <string name="register">Register</string>
-    <string name="name">Name</string>
-    <string name="email">Email</string>
-    <string name="Password">Password</string>
-    <string name="back_to_login">Back to login</string>
-    <string name="logout">LogOut</string>
-    <string name="user_email">User Email :</string>
-    <string name="name_of_user">Name of user :</string>
-    <string name="welcome_sir">Welcome To Flash list !</string>
-    <string name="navigation_drawer_open" translatable="false"> Open navigation drawer </string>
-    <string name="navigation_drawer_close" translatable="false"> Close navigation drawer </string>
     <string name="Audio">Audio</string>
-    <string name="images">Images</string>
     <string name="explanation_of_the_project_idea">Explanation of the project idea</string>
-    <string name="soundimage" translatable="false">SoundImage</string>
     <string name="login">Login</string>
-    <string name="logo">LOGO</string>
+    <string name="logo" translatable="false">LOGO</string>
     <string name="EmailLogin">email</string>
     <string name="passwordLogin">password</string>
     <string name="show_password">Show Password</string>

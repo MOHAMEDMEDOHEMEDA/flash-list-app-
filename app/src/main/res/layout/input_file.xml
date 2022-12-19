@@ -9,11 +9,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:text="Add a new task"
+        android:text="@string/add_a_new_task"
         android:gravity="center"
-        android:background="@drawable/background_design"
+        android:background="@drawable/boxdesign"
         android:padding="10dp"
         android:textColor="#fff"
+        android:fontFamily="@font/aclonica"
         android:textStyle="bold"
         android:textSize="20sp"
         />
@@ -22,19 +23,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:baselineAligned="false">
 
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2">
+
             <TextView
+                android:fontFamily="@font/aclonica"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Task"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/taskTitle"
                 android:textColor="#000"
-                android:textStyle="bold"
-                android:layout_margin="10dp"/>
+                android:textStyle="bold" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -45,16 +52,19 @@
             <EditText
                 android:id="@+id/task"
                 android:layout_width="match_parent"
+                android:fontFamily="@font/aclonica"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
-                android:hint="Task.."
+                android:hint="@string/taskInput"
                 android:minHeight="48dp"
                 android:textColor="#000"
                 android:textColorHint="#000"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:importantForAutofill="no"
+                android:inputType="text" />
         </RelativeLayout>
 
     </LinearLayout>
@@ -63,19 +73,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:baselineAligned="false">
 
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Description"
-                android:textStyle="bold"
+                android:fontFamily="@font/aclonica"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/description"
                 android:textColor="#000"
-                android:layout_margin="10dp"/>
+                android:textStyle="bold" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -88,54 +104,68 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
+                android:fontFamily="@font/aclonica"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
-                android:hint="description.."
+                android:hint="@string/descriptioninput"
                 android:minHeight="48dp"
                 android:textColor="#000"
                 android:textColorHint="#000"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:inputType="textLongMessage"
+                android:importantForAutofill="no" />
         </RelativeLayout>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:baselineAligned="false">
 
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2">
-            <Button
+
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/CancelBtn"
-                android:text="Cancel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/aclonica"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/rectdesign"
+                android:text="@string/cancel"
                 android:textAllCaps="false"
                 android:textColor="#fff"
-                android:background="@drawable/background_design"
-                android:layout_margin="10dp"
-                android:textStyle="bold"
                 android:textSize="18sp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:textStyle="bold" />
 
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2">
-            <Button
+
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/saveBtn"
-                android:text="Save"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:fontFamily="@font/aclonica"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/rectdesign"
+                android:text="@string/save"
                 android:textAllCaps="false"
                 android:textColor="#fff"
-                android:background="@drawable/background_design"
-                android:layout_margin="10dp"
-                android:textStyle="bold"
                 android:textSize="18sp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:textStyle="bold" />
         </RelativeLayout>
     </LinearLayout>
 </LinearLayout>
