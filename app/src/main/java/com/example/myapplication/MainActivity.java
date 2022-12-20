@@ -101,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(isInternetConnection()){
             loader.setTitle("Fetching Data");
             loader.setMessage("Getting your data ...");
+            loader.setCancelable(false);
             loader.show();
         }else {
             Toast.makeText(MainActivity.this, "No Internet Connection !! " , Toast.LENGTH_SHORT).show();
@@ -112,9 +113,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (dataSnapshot.exists()) {
                     loader.setTitle("Fetching Data");
                     loader.setMessage("Getting your data ...");
+                    loader.setCancelable(false);
                     loader.show();
-                    Toast.makeText(MainActivity.this,"data exists",Toast.LENGTH_SHORT).show();
-
                 }
                 else{
                     Toast.makeText(MainActivity.this,"No data exists",Toast.LENGTH_SHORT).show();

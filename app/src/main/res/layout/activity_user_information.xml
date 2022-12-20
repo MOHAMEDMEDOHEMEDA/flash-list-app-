@@ -43,7 +43,6 @@
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         android:textStyle="bold|italic" />
-
     <TextView
         android:id="@+id/EmailOfuser"
         android:layout_width="match_parent"
@@ -57,7 +56,6 @@
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         android:textStyle="bold|italic" />
-
     <TextView
         android:id="@+id/Copyright"
         android:layout_width="match_parent"
